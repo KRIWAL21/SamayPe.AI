@@ -64,25 +64,14 @@ SamayPe AI doesn't wait for you to log into a dashboard. It maintains an active,
 
 ---
 
-## ⚡ Core AI Architecture & Key Features
+## ⚡ Core Functional & AI Features Summary
 
-### 1. 🧠 Gemini 2.5 Autonomous Task Decomposition
-When a user enters a complex task (e.g., *"Build Full-Stack E-Commerce App"*), SamayPe AI invokes Gemini 2.5 to generate an actionable **Subtask Roadmap**.
-* **Collapsible Roadmap HUD:** Subtasks are cleanly tucked inside an expandable bar (`[⚡ SUBTASK ROADMAP & AI DIAGNOSTICS ▼]`) on each card, keeping the dashboard uncluttered.
-* **1-Click Subtask Completion:** Check off granular milestones; progress percentage updates dynamically across web and mobile.
-
-### 2. 🛡️ Proactive Auto-Fix Rescheduling
-When a deadline passes or risk spikes to `CRITICAL`, SamayPe AI displays an **`AUTO-FIX ✨`** button.
-* With one click, Gemini analyzes your current queue and realigns the task to a feasible timeline without disrupting existing high-priority commitments.
-
-### 3. 🎨 Neo-Tokyo Cyber Mecha HUD Interface
-Designed with visual excellence in mind:
-* **Glassmorphism & Neon Glows:** Obsidian backdrop (`#05050a`) with glowing neon borders (`#00f0ff` cyan & `#9d4edd` purple).
-* **Stylized Japanese Kanji Accents:** Cyber mecha badges (`[SYSTEM AWAKENED // DEADLINE GUARDIAN V2.5]`) and katakana watermarks (`サマイペ AI`).
-
-### 4. 🔒 Mandatory Authentication Guard & Judge Bypass
-* Unauthenticated visitors attempting to access any route (`/`, `/calendar`, `/insights`) are intercepted and securely redirected to `/login`.
-* Includes a **One-Click Judge Demo Login** button for instant evaluation without typing passwords.
+* **🧠 Autonomous Goal Decomposition (Gemini 2.5):** Transforms high-level goals into estimated, bite-sized subtask checklists automatically upon creation.
+* **📱 Bi-Directional WhatsApp Companion Engine:** Full schedule control via Twilio webhooks—add tasks, check daily planners, diagnose urgent risks, and trigger AI auto-fixes directly over WhatsApp.
+* **🛡️ Proactive Auto-Fix Rescheduling:** Detects deadline drift and overloaded schedules, autonomously compressing and realigning tasks to feasible time slots with a single click.
+* **📊 Multi-Domain Priority Ranking:** Synthesizes time urgency, career/GPA impact, energy load, and streak velocity to dynamically rank and prioritize commitments in real time.
+* **🩺 Live Burnout & Velocity Diagnostics:** Tracks execution momentum and cognitive load distribution to alert users and suggest workload reductions before burnout occurs.
+* **🎙️ Multi-Channel Management Controls:** Rename, delete, complete subtasks, or reschedule commitments seamlessly across both the web application and phone interface.
 
 ---
 
