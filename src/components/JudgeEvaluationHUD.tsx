@@ -183,7 +183,7 @@ export default function JudgeEvaluationHUD({ onInjectScenario }: JudgeEvaluation
                         <div className="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center text-green-400 font-bold font-mono">2</div>
                         <div>
                           <p className="text-xs text-gray-400">Send WhatsApp Message:</p>
-                          <p className="font-mono font-bold text-cyan-400 text-sm">join gentle-horizon</p>
+                          <p className="font-mono font-bold text-cyan-400 text-sm">join samaype-ai</p>
                         </div>
                       </div>
 
