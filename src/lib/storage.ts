@@ -8,63 +8,98 @@ const TASKS_FILE = path.join(DATA_DIR, 'tasks.json');
 const defaultTasks: Task[] = [
   {
     id: 'task-1',
-    userId: 'hackathon-user',
-    title: 'Submit Vibe2Ship AI Hackathon Solution',
-    description: 'Finalize agentic loop, record 3-min demo video, deploy to Google Cloud Run, and complete BlockseBlock submission.',
-    deadline: new Date(Date.now() + 1000 * 60 * 60 * 14).toISOString(),
-    priority: Priority.URGENT,
+    userId: 'demo-user',
+    title: 'System Architecture & Microservice API Review',
+    description: 'Audit authentication middleware, verify rate-limiting thresholds, and document Swagger REST endpoints.',
+    deadline: new Date(Date.now() + 1000 * 60 * 60 * 96).toISOString(),
+    priority: Priority.LOW,
     status: 'IN_PROGRESS' as any,
-    category: 'Hackathon Sprint',
-    riskScore: 0.88,
-    riskLevel: RiskLevel.CRITICAL,
-    aiRecommendation: '🚨 URGENT: Only 14 hours left. Skip extra CSS tweaks and focus strictly on recording the demo video.',
+    category: 'Engineering',
+    riskScore: 0.15,
+    riskLevel: RiskLevel.LOW,
+    aiRecommendation: '🌱 Low Risk & Synchronized: Pace is optimal. Consider completing API documentation during tomorrow afternoon focus block.',
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
     subtasks: [
-      { id: '1-1', title: 'Implement Gemini Function Calling Task Decomposer', estimatedMinutes: 45, completed: true },
-      { id: '1-2', title: 'Set up Twilio WhatsApp Bot Webhook', estimatedMinutes: 30, completed: true },
-      { id: '1-3', title: 'Deploy Docker Container to Google Cloud Run', estimatedMinutes: 40, completed: false },
-      { id: '1-4', title: 'Record walkthrough video showing autonomous rescheduling', estimatedMinutes: 30, completed: false },
-      { id: '1-5', title: 'Complete compulsory Step 5 on BlockseBlock dashboard', estimatedMinutes: 15, completed: false },
+      { id: '1-1', title: 'Audit JWT token expiration and refresh logic', estimatedMinutes: 30, completed: true },
+      { id: '1-2', title: 'Update Swagger OpenAPI schema definitions', estimatedMinutes: 45, completed: false },
+      { id: '1-3', title: 'Review Redis caching TTL parameters', estimatedMinutes: 25, completed: false }
     ]
   },
   {
     id: 'task-2',
-    userId: 'hackathon-user',
-    title: 'Advanced Machine Learning End-Semester Project',
-    description: 'Complete data preprocessing pipeline, train XGBoost model on GPU instance, and generate 15-page IEEE format report.',
-    deadline: new Date(Date.now() + 1000 * 60 * 60 * 60).toISOString(),
-    priority: Priority.HIGH,
+    userId: 'demo-user',
+    title: 'Weekly Gym Workout & Nutrition Check-In',
+    description: 'Complete 4 days of resistance training and log daily hydration goals.',
+    deadline: new Date(Date.now() + 1000 * 60 * 60 * 72).toISOString(),
+    priority: Priority.LOW,
     status: 'TODO' as any,
-    category: 'Academics',
-    riskScore: 0.62,
-    riskLevel: RiskLevel.HIGH,
-    aiRecommendation: '⚠️ High Risk: Large volume of report writing remaining. Suggest starting literature review tonight.',
+    category: 'Wellness',
+    riskScore: 0.10,
+    riskLevel: RiskLevel.LOW,
+    aiRecommendation: '✅ On Track: Physical wellness directly fuels mental execution velocity. Keep up the consistent routine.',
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
     subtasks: [
-      { id: '2-1', title: 'Clean missing values & feature scaling', estimatedMinutes: 60, completed: true },
-      { id: '2-2', title: 'Hyperparameter tuning with Optuna', estimatedMinutes: 120, completed: false },
-      { id: '2-3', title: 'Draft IEEE format LaTeX report', estimatedMinutes: 180, completed: false },
+      { id: '2-1', title: 'Morning 5km interval cardio run', estimatedMinutes: 35, completed: true },
+      { id: '2-2', title: 'Upper body hypertrophy & stretching session', estimatedMinutes: 50, completed: false }
     ]
   },
   {
     id: 'task-3',
-    userId: 'hackathon-user',
-    title: 'Pay Electricity & Fiber Broadband Bills',
-    description: 'Avoid late fee disconnection penalties before month end.',
-    deadline: new Date(Date.now() + 1000 * 60 * 60 * 120).toISOString(),
+    userId: 'demo-user',
+    title: 'Quarterly Financial Tax & SaaS Invoice Reconciliation',
+    description: 'Organize cloud server invoices, SaaS subscription receipts, and file GST expense report.',
+    deadline: new Date(Date.now() + 1000 * 60 * 60 * 48).toISOString(),
     priority: Priority.MEDIUM,
     status: 'TODO' as any,
-    category: 'Personal',
-    riskScore: 0.25,
-    riskLevel: RiskLevel.LOW,
-    aiRecommendation: '✅ On Track: Sufficient buffer remaining. Automated payment suggested.',
+    category: 'Finance',
+    riskScore: 0.38,
+    riskLevel: RiskLevel.MEDIUM,
+    aiRecommendation: '⚡ Moderate Buffer: Allocate 30 minutes on Friday morning to upload vendor invoices before accounting deadline.',
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
     subtasks: [
-      { id: '3-1', title: 'Login to utility portal and verify amount due', estimatedMinutes: 10, completed: false },
-      { id: '3-2', title: 'Complete UPI payment authorization', estimatedMinutes: 5, completed: false },
+      { id: '3-1', title: 'Download AWS and Google Cloud billing PDFs', estimatedMinutes: 15, completed: true },
+      { id: '3-2', title: 'Categorize software subscription receipts', estimatedMinutes: 25, completed: false }
+    ]
+  },
+  {
+    id: 'task-4',
+    userId: 'demo-user',
+    title: 'Client Product Demo & Roadmap Presentation',
+    description: 'Finalize slide deck showing Q3 feature releases, interactive analytics charts, and mobile UI improvements.',
+    deadline: new Date(Date.now() + 1000 * 60 * 60 * 36).toISOString(),
+    priority: Priority.HIGH,
+    status: 'TODO' as any,
+    category: 'Product',
+    riskScore: 0.52,
+    riskLevel: RiskLevel.MEDIUM,
+    aiRecommendation: '💡 Proactive Tip: Slide content is 70% complete. Rehearse live demo walkthrough to ensure smooth transitions.',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    subtasks: [
+      { id: '4-1', title: 'Compile slide deck with user velocity metrics', estimatedMinutes: 40, completed: true },
+      { id: '4-2', title: 'Rehearse 10-minute live demonstration', estimatedMinutes: 30, completed: false }
+    ]
+  },
+  {
+    id: 'task-5',
+    userId: 'demo-user',
+    title: 'Resolve Production Payment Gateway Timeout Bug',
+    description: 'Investigate Stripe webhook retry timeouts occurring during high-concurrency checkout bursts.',
+    deadline: new Date(Date.now() + 1000 * 60 * 60 * 10).toISOString(),
+    priority: Priority.URGENT,
+    status: 'IN_PROGRESS' as any,
+    category: 'Engineering',
+    riskScore: 0.82,
+    riskLevel: RiskLevel.HIGH,
+    aiRecommendation: '⚠️ High Priority: Isolate database connection pool contention. Review CloudWatch error logs immediately.',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    subtasks: [
+      { id: '5-1', title: 'Inspect database connection pool limits', estimatedMinutes: 30, completed: true },
+      { id: '5-2', title: 'Deploy exponential backoff retry handler', estimatedMinutes: 45, completed: false }
     ]
   }
 ];
@@ -79,7 +114,12 @@ export function getTasks(): Task[] {
       return defaultTasks;
     }
     const data = fs.readFileSync(TASKS_FILE, 'utf-8');
-    return JSON.parse(data);
+    const parsed = JSON.parse(data);
+    if (Array.isArray(parsed) && parsed.some((t: Task) => t.title?.includes('Vibe2Ship AI Hackathon Solution'))) {
+      fs.writeFileSync(TASKS_FILE, JSON.stringify(defaultTasks, null, 2), 'utf-8');
+      return defaultTasks;
+    }
+    return parsed;
   } catch (err) {
     console.error('Storage getTasks error:', err);
     return defaultTasks;
