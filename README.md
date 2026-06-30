@@ -49,6 +49,12 @@ SamayPe AI heavily integrates state-of-the-art Google infrastructure and models 
 * **Multimodal Parsing:** Voice notes and images (syllabi, error logs, screenshots) sent over messaging are parsed by multimodal vision/audio models into structured tasks automatically.
 * **Browser Voice Capture (`VoiceGoalButton.tsx`):** Native Web Audio transcription feeds straight into the same task-generation pipeline on desktop.
 
+<p align="center">
+  <img src="public/screenshots/whatsapp-menu.jpg" width="240" alt="WhatsApp Companion Menu" />
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="public/screenshots/whatsapp-planner.jpg" width="240" alt="WhatsApp Companion Planner" />
+</p>
+
 ### Tier 3: Context-Aware Visibility & Coaching
 * **AI Coach (`/chat`):** A context-aware mentor that reads your live task state and drafts professional extension-request emails tailored to professors or managers when deadlines slip.
 * **Chronological Calendar Grid (`/calendar`):** Multi-domain visual timeline mapping active subtasks.
@@ -130,4 +136,4 @@ User
 * **Local Offline Agentic RAG:** Client-side vector storage for private offline study note indexing.
 
 ## 8. Team
-* **Krishna Walia (`@KRIWAL21`)** — Lead Full-Stack AI & Agentic Systems Architect
+* **Krishna Agarwal (`@KRIWAL21`)** — Lead Full-Stack AI & Agentic Systems Architect

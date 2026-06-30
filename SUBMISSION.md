@@ -130,4 +130,4 @@ User
 * **Local Offline Agentic RAG:** Client-side vector storage for private offline study note indexing.
 
 ## 8. Team
-* **Krishna Walia (`@KRIWAL21`)** — Lead Full-Stack AI & Agentic Systems Architect
+* **Krishna Agarwal (`@KRIWAL21`)** — Lead Full-Stack AI & Agentic Systems Architect
