@@ -1,181 +1,144 @@
-# SamayPe AI — Autonomous Agentic Deadline Guardian ⚡
+# ⛩️ SamayPe AI — Autonomous Deadline Guardian & Multi-Channel Intervention Engine
 
-> **Vibe2Ship Hackathon 2026** | Built with Gemini 2.0 Flash, Next.js 16, Firebase & Twilio
+[![Live Cloud Run Deployment](https://img.shields.io/badge/Live%20Production-Google%20Cloud%20Run-00f0ff?style=for-the-badge&logo=googlecloud)](https://samaype-ai-339043112543.us-central1.run.app)
+[![Powered by Gemini 2.5](https://img.shields.io/badge/AI%20Engine-Gemini%202.5%20Flash-9d4edd?style=for-the-badge&logo=google)](https://deepmind.google/technologies/gemini/)
+[![Next.js 15](https://img.shields.io/badge/Framework-Next.js%2015%20App%20Router-black?style=for-the-badge&logo=next.js)](https://nextjs.org)
+[![Twilio WhatsApp](https://img.shields.io/badge/WhatsApp%20Bot-Twilio%20Webhooks-25D366?style=for-the-badge&logo=whatsapp)](https://www.twilio.com)
 
-An event-driven agentic productivity system that goes beyond passive reminders. SamayPe AI **autonomously decomposes goals, schedules subtasks, detects temporal drift, and triggers multi-channel interventions** before deadlines are missed.
-
----
-
-## 🏗️ Architecture
-
-```
-User Input (Voice / Text / WhatsApp)
-         ↓
-   Gemini 2.0 Flash (Orchestrator Agent)
-         ↓
-   ┌─────┴──────┐
-   │            │
- Task Planner   Risk Telemetry
- Agent          Engine
-   │            │
-   └─────┬──────┘
-         ↓
-   Schedule Engine (Google Calendar API)
-         ↓
-   Firebase Firestore (Persistence)
-         ↓
-   ┌─────┴──────┐
-   │            │
- Web Dashboard  WhatsApp Bot
- (Next.js 16)   (Twilio Webhook)
-```
+> **"Traditional calendars are passive archives of failure. SamayPe AI is an active guardian that compresses schedules, prevents burnout, and meets developers where they live—on web and WhatsApp."**
 
 ---
 
-## ✨ Key Features
+## 🌐 Live Production Demo & Judge Credentials
 
-| Feature | Description |
-|---|---|
-| **Agentic Task Decomposition** | Gemini Function Calling (`create_task_plan`) converts vague goals into dependency-mapped execution DAGs |
-| **Deterministic Risk Telemetry** | Formula: `remaining_work / free_calendar_slots` — auto-classifies tasks as Low → Medium → High → Critical |
-| **Autonomous Auto-Fix** | One-click proactive schedule compression when deadlines drift |
-| **WhatsApp Companion Bot** | Text goals to WhatsApp → Gemini decomposes → syncs to web dashboard instantly |
-| **Voice Input** | Web Speech API tuned for Indian English (`en-IN`) with pulsing recording animation |
-| **Weekly Sprint Plan Builder** | Select commitments + execution velocity → AI synthesizes zero-collision 7-day roadmap |
-| **Community Accountability** | Gamified leaderboard with live arena telemetry and virtual cheer boosts |
-| **Habit Momentum Engine** | Streak tracking with 7-day contribution dots and AI pattern correlation |
-| **Behavioral Analytics** | Recharts Area + Pie charts showing completion velocity and workload distribution |
-| **AI Profile Calibration** | 3-step onboarding wizard to tune archetype, peak hours, and alert channels |
+| Link / Role | Access URL / Credentials |
+| :--- | :--- |
+| **🌐 Live Production Web App** | **[https://samaype-ai-339043112543.us-central1.run.app](https://samaype-ai-339043112543.us-central1.run.app)** |
+| **🏆 One-Click Judge Demo Login** | Click **"One-Click Judge Demo Login 🚀"** directly on the `/login` page |
+| **🔑 Manual Demo Credentials** | Email: `judge@vibe2ship.ai` <br> Password: `vibe2ship2026` |
+| **📱 WhatsApp Sandbox Companion** | Send **`menu`** to **`+1 415 523 8886`** *(Twilio Sandbox)* |
 
 ---
 
-## 🔧 Tech Stack
+## 🔥 Executive Summary
 
-### Google Technologies
-- **Gemini 2.0 Flash** — Agentic orchestration with structured Function Calling
-- **Firebase Auth** — Google Sign-In authentication
-- **Firebase Firestore** — Real-time task and habit persistence
-- **Google Calendar API** — Intelligent schedule synchronization
-- **Google Cloud Run** — Containerized production deployment
+Modern students and developers suffer from **Deadline Drift**—they overestimate future energy, create monolithic tasks, and ignore calendar reminders until panic sets in. 
 
-### Frontend & Infra
-- **Next.js 16** (App Router + Turbopack) — React Server Components
-- **TypeScript** — Strict type safety across all 20+ files
-- **Tailwind CSS v4** — Utility-first dark theme styling
-- **Framer Motion** — Layout animations, staggered lists, accordion transitions
-- **Recharts** — Interactive Area and Pie chart visualizations
-- **Lucide React** — Consistent icon system
-- **Twilio** — WhatsApp Sandbox webhook integration
+**SamayPe AI** solves this by evaluating human commitments across **4 Cognitive Domains**:
+1. **Urgency Load** (Time remaining curve)
+2. **Impact Score** (Weight on overall GPA/career/project success)
+3. **Cognitive Energy Demand** (High focus vs. low effort administrative work)
+4. **Streak Velocity** (Historic momentum and execution rate)
+
+Powered by **Google Gemini 2.5 Flash**, SamayPe AI acts as an autonomous co-pilot that decomposes massive goals into bite-sized roadmaps, continuously evaluates risk levels, and provides bi-directional interventions directly over WhatsApp.
 
 ---
 
-## 🚀 Quick Start
+## 📱 Bi-Directional Multi-Channel WhatsApp Intervention Engine
+
+SamayPe AI doesn't wait for you to log into a dashboard. It maintains an active, bi-directional webhook link via **Twilio WhatsApp** that lets you manage your entire schedule on the go.
+
+### 📸 Live WhatsApp Interactive Companion in Action
+
+<div align="center">
+  <img src="public/screenshots/whatsapp-menu.jpg" width="45%" alt="WhatsApp Interactive Menu" />
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="public/screenshots/whatsapp-planner.jpg" width="45%" alt="WhatsApp Task Planner" />
+</div>
+
+### 🎯 Core WhatsApp Bot Capabilities:
+
+1. **👑 Interactive Multi-Option Menu (`Option 1 to 5`)**
+   - Whenever you text `menu`, `hi`, or `hello`, the bot greets you with a clean numbered menu so you never have to memorize commands.
+2. **📝 Option 1: Create & Schedule Goal with AI Decomposition**
+   - Reply `1` and tell the bot: *"I have a hackathon submission due tomorrow evening."*
+   - Gemini 2.5 intercepts your message, calculates realistic risk, extracts due dates, and builds a 5-step subtask checklist saved directly to your cloud dashboard.
+3. **📋 Option 2: View Active Task Planner (`Stack of Tasks`)**
+   - Reply `2` to receive your clean formatted daily planner with live progress trackers (`[2/4 steps completed]`) and real-time AI risk badges (`CRITICAL`, `HIGH`, `LOW`).
+4. **🚨 Option 3: Diagnose High-Risk Deadlines**
+   - Reply `3` to isolate only the tasks in immediate danger of failing, accompanied by Gemini recommendations on what to cut or delegate.
+5. **⚡ Option 4: Trigger Autonomous Schedule Compression**
+   - Reply `4` when feeling overwhelmed. Gemini re-balances your schedule, pushes non-critical tasks forward, and compresses milestones into achievable 25-minute sprints.
+6. **✏️ Option 5 & Self-Service Controls: Rename & Delete**
+   - Users can rename any task on the fly or delete completed/obsolete tasks right from their chat interface.
+
+---
+
+## ⚡ Core AI Architecture & Key Features
+
+### 1. 🧠 Gemini 2.5 Autonomous Task Decomposition
+When a user enters a complex task (e.g., *"Build Full-Stack E-Commerce App"*), SamayPe AI invokes Gemini 2.5 to generate an actionable **Subtask Roadmap**.
+* **Collapsible Roadmap HUD:** Subtasks are cleanly tucked inside an expandable bar (`[⚡ SUBTASK ROADMAP & AI DIAGNOSTICS ▼]`) on each card, keeping the dashboard uncluttered.
+* **1-Click Subtask Completion:** Check off granular milestones; progress percentage updates dynamically across web and mobile.
+
+### 2. 🛡️ Proactive Auto-Fix Rescheduling
+When a deadline passes or risk spikes to `CRITICAL`, SamayPe AI displays an **`AUTO-FIX ✨`** button.
+* With one click, Gemini analyzes your current queue and realigns the task to a feasible timeline without disrupting existing high-priority commitments.
+
+### 3. 🎨 Neo-Tokyo Cyber Mecha HUD Interface
+Designed with visual excellence in mind:
+* **Glassmorphism & Neon Glows:** Obsidian backdrop (`#05050a`) with glowing neon borders (`#00f0ff` cyan & `#9d4edd` purple).
+* **Stylized Japanese Kanji Accents:** Cyber mecha badges (`[SYSTEM AWAKENED // DEADLINE GUARDIAN V2.5]`) and katakana watermarks (`サマイペ AI`).
+
+### 4. 🔒 Mandatory Authentication Guard & Judge Bypass
+* Unauthenticated visitors attempting to access any route (`/`, `/calendar`, `/insights`) are intercepted and securely redirected to `/login`.
+* Includes a **One-Click Judge Demo Login** button for instant evaluation without typing passwords.
+
+---
+
+## 🛠️ Technology Stack & System Architecture
+
+| Layer | Technology | Purpose |
+| :--- | :--- | :--- |
+| **Frontend Framework** | Next.js 15 (App Router) | Server-Side Rendering, API Routes, & Client Components |
+| **AI / LLM Engine** | Google Gemini 2.5 Flash (`@google/genai`) | Cognitive Decomposition, Risk Drift Analysis, & NLP |
+| **Messaging Engine** | Twilio SDK & WhatsApp Webhooks | Bi-directional interactive chat & reminder alerts |
+| **Styling & UI** | Tailwind CSS & Framer Motion | Cyber mecha glassmorphism & fluid HUD animations |
+| **Cloud Infrastructure** | Google Cloud Run (Docker Containerized) | Auto-scaling serverless production container |
+
+---
+
+## 🚀 Local Development Setup
 
 ### Prerequisites
-- Node.js 18+
-- A Gemini API key from [Google AI Studio](https://aistudio.google.com/)
+* Node.js 18+ installed
+* A Gemini API Key from Google AI Studio
+* Twilio Account SID & Auth Token (for WhatsApp features)
 
-### Setup
+### Installation Steps
 
-```bash
-# 1. Clone the repository
-git clone https://github.com/KRIWAL21/SamayPeAI.git
-cd SamayPeAI
+1. **Clone the Repository:**
+   ```bash
+   git clone https://github.com/KRIWAL21/SamayPe.AI.git
+   cd SamayPe.AI
+   ```
 
-# 2. Install dependencies
-npm install
+2. **Install Dependencies:**
+   ```bash
+   npm install
+   ```
 
-# 3. Create environment file
-cp .env.example .env.local
-# Edit .env.local and add your real GEMINI_API_KEY
+3. **Configure Environment Variables:**
+   Create a `.env.local` file in the project root:
+   ```env
+   GEMINI_API_KEY=your_gemini_api_key_here
+   TWILIO_ACCOUNT_SID=your_twilio_sid
+   TWILIO_AUTH_TOKEN=your_twilio_auth_token
+   TWILIO_WHATSAPP_FROM=whatsapp:+14155238886
+   USER_WHATSAPP_NUMBER=whatsapp:+91yourphonenumber
+   ```
 
-# 4. Start development server
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) in your browser.
-
-### Production Build
-
-```bash
-npm run build
-npm start
-```
-
----
-
-## 📁 Project Structure
-
-```
-SamayPeAI/
-├── src/
-│   ├── app/
-│   │   ├── page.tsx              # Landing Dashboard
-│   │   ├── layout.tsx            # Root Layout + Sidebar
-│   │   ├── globals.css           # Dark theme design tokens
-│   │   ├── chat/page.tsx         # AI Conversational Coach
-│   │   ├── calendar/page.tsx     # Visual Schedule Engine
-│   │   ├── habits/page.tsx       # Streak & Habit Tracker
-│   │   ├── insights/page.tsx     # Analytics Dashboard
-│   │   ├── create-plan/page.tsx  # Weekly Sprint Plan Builder
-│   │   ├── community/page.tsx    # Accountability Leaderboard
-│   │   ├── profile-setup/page.tsx # AI Onboarding Wizard
-│   │   └── api/
-│   │       ├── chat/route.ts     # Gemini conversational endpoint
-│   │       ├── decompose/route.ts # Function Calling decomposer
-│   │       ├── tasks/route.ts    # Tasks CRUD
-│   │       └── whatsapp/route.ts # Twilio WhatsApp webhook
-│   ├── components/
-│   │   ├── Sidebar.tsx           # Glass sidebar + mobile bottom nav
-│   │   ├── TaskCard.tsx          # Expandable priority task card
-│   │   ├── AddTaskModal.tsx      # AI-powered task creation modal
-│   │   ├── VoiceButton.tsx       # Web Speech API microphone
-│   │   └── WhatsAppWidget.tsx    # QR code + deep-link widget
-│   └── lib/
-│       ├── gemini.ts             # Gemini SDK + Function Declarations
-│       ├── firebase.ts           # Firebase client config
-│       ├── riskEngine.ts         # Deterministic risk scoring
-│       ├── priorityEngine.ts     # Urgency × importance ranking
-│       └── types.ts              # TypeScript domain models
-├── Dockerfile                    # Multi-stage Cloud Run container
-├── .env.example                  # Environment template
-└── package.json
-```
+4. **Run the Development Server:**
+   ```bash
+   npm run dev
+   ```
+   Open [http://localhost:3000](http://localhost:3000) to view the application.
 
 ---
 
-## 🐳 Deployment (Google Cloud Run)
+## 🏆 Hackathon Alignment & Impact
 
-```bash
-# Build and deploy in one command
-gcloud run deploy samaype-ai \
-  --source . \
-  --platform managed \
-  --region us-central1 \
-  --allow-unauthenticated \
-  --set-env-vars GEMINI_API_KEY=your-key-here
-```
+SamayPe AI proves that AI coding assistants and autonomous models can do far more than generate code—they can actively manage human bandwidth, protect mental well-being, and act as personalized productivity guardians across web and mobile platforms.
 
 ---
-
-## 📊 Evaluation Criteria Mapping
-
-| Criteria | Weight | Implementation |
-|---|---|---|
-| Agentic Depth | 20% | Gemini Function Calling, autonomous rescheduling, multi-step DAG decomposition |
-| Problem Solving | 20% | Targets procrastination paralysis with proactive intervention, not passive reminders |
-| Innovation | 20% | Risk telemetry engine, WhatsApp multi-channel, community accountability |
-| Google Tech | 15% | Gemini API, Firebase, Cloud Run, Google Calendar |
-| Product UX | 10% | Glassmorphism dark theme, Framer Motion animations, mobile-responsive |
-| Technical | 10% | TypeScript strict, zero build errors, clean architecture |
-| Completeness | 5% | 8 pages, 4 API routes, voice + text + WhatsApp input channels |
-
----
-
-## 👨‍💻 Author
-
-**KRIWAL21** — Built for the Vibe2Ship Hackathon 2026
-
----
-
-*SamayPe doesn't just remind you — it fights for your deadline.* ⚡
+*Built with ❤️ and autonomous precision for the Vibe2Ship AI Hackathon 2026.*
