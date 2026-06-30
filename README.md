@@ -65,16 +65,52 @@ SamayPe AI heavily integrates state-of-the-art Google infrastructure and models 
 
 ---
 
-## 5. Technologies Used (Open Source Stack)
+## 5. Technologies Used
 
-| Layer | Technology | Architectural Purpose |
+### Architecture Flow
+
+```
+User
+ ├─ Web Dashboard (Next.js 15 / React 19)
+ └─ WhatsApp Companion (Twilio Webhook) ─┐
+                                          ▼
+                         API Layer (Next.js Route Handlers)
+                                          │
+                                          ▼
+                   Reasoning Engine (text + vision + audio processing)
+                                          │
+                                          ▼
+                   Task Store ── Risk Scoring ── Auto-Reschedule
+                                          │
+                                          ▼
+                   Cron Engine (proactive alerts) ─→ back to User
+```
+
+### Technical Stack Summary
+
+| Layer | Technology | Purpose |
 | :--- | :--- | :--- |
-| **Full-Stack Framework** | Next.js 15.2.9 (App Router), React 19.2.4 | Server-Side Rendering, API Routes, & Client Components |
+| **Frontend Framework** | Next.js 15 (App Router), React 19, TypeScript | Server-Side Rendering, API Routes, & Client UI |
 | **AI Reasoning & Vision** | Google Gemini 2.5 Flash (`@google/genai` SDK) | Cognitive Decomposition, Risk Scoring, & Multimodal NLP |
 | **Messaging Infrastructure**| Twilio Serverless API | Bi-directional interactive chat & webhook payload processing |
 | **Styling & Motion** | Tailwind CSS v4, Framer Motion v12 | Responsive Cyber-Mecha UI & glassmorphism components |
-| **Charting & Analytics** | Recharts v3.9.0 | Responsive SVG data visualization for burnout analytics |
-| **Deployment Infrastructure**| Docker on Google Cloud Run | Auto-scaling serverless production environment |
+| **Deployment & Hosting** | Docker on Google Cloud Run | Auto-scaling serverless containerized production environment |
+
+### Comprehensive Open Source Libraries & Dependencies
+
+| Package / Library | Version | Role & Description | Source |
+| :--- | :--- | :--- | :--- |
+| **`next`** | `15.2.9` | Full-stack App Router framework, API endpoints | [github.com/vercel/next.js](https://github.com/vercel/next.js) |
+| **`react` & `react-dom`** | `19.2.4` | Core UI rendering engine and state tree | [github.com/facebook/react](https://github.com/facebook/react) |
+| **`@google/generative-ai`**| `^0.24.1` | Official SDK for reasoning, function calling, & vision | [github.com/google-gemini](https://github.com/google-gemini/generative-ai-js) |
+| **`framer-motion`** | `^12.42.0` | Declarative motion library powering HUD modals | [github.com/framer/motion](https://github.com/framer/motion) |
+| **`tailwindcss`** | `^4.0.0` | Utility-first CSS framework for responsive design | [github.com/tailwindlabs](https://github.com/tailwindlabs/tailwindcss) |
+| **`lucide-react`** | `^1.21.0` | Vector iconography suite for UI badges and controls | [github.com/lucide-icons](https://github.com/lucide-icons/lucide) |
+| **`recharts`** | `^3.9.0` | Responsive SVG charting library for `/insights` | [github.com/recharts/recharts](https://github.com/recharts/recharts) |
+| **`react-hot-toast`** | `^2.6.0` | Lightweight toast notifications for user feedback | [github.com/timolins](https://github.com/timolins/react-hot-toast) |
+| **`clsx` & `tailwind-merge`**| `^2.1.1` / `^3.6.0` | Conditional CSS class merging and utility utilities | [github.com/lukeed/clsx](https://github.com/lukeed/clsx) |
+| **`date-fns`** | `^4.4.0` | Temporal parsing and deadline risk duration math | [github.com/date-fns](https://github.com/date-fns/date-fns) |
+| **`uuid`** | `^14.0.1` | RFC-compliant unique identifier generation | [github.com/uuidjs/uuid](https://github.com/uuidjs/uuid) |
 
 ---
 
