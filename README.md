@@ -1,145 +1,97 @@
-# ⛩️ SamayPe.AI — Autonomous Agentic Deadline Management
+# SamayPe.AI — Autonomous Agentic Deadline Management
 **Your AI negotiates with time so you don't have to.**
 
-[![Live Cloud Run Deployment](https://img.shields.io/badge/Live%20Production-Google%20Cloud%20Run-00f0ff?style=for-the-badge&logo=googlecloud)](https://samaype-ai-339043112543.us-central1.run.app)
-[![Powered by Gemini 2.5](https://img.shields.io/badge/AI%20Engine-Gemini%202.5%20Flash-9d4edd?style=for-the-badge&logo=google)](https://deepmind.google/technologies/gemini/)
-[![Next.js 15](https://img.shields.io/badge/Framework-Next.js%2015%20App%20Router-black?style=for-the-badge&logo=next.js)](https://nextjs.org)
-[![Twilio WhatsApp](https://img.shields.io/badge/WhatsApp%20Bot-Twilio%20Webhooks-25D366?style=for-the-badge&logo=whatsapp)](https://www.twilio.com)
+* **Live Cloud Run Deployment:** https://samaype-ai-339043112543.us-central1.run.app
+* **GitHub Repository Link:** https://github.com/KRIWAL21/SamayPe.AI
+* **Judge Login Credentials:** `judge@vibe2ship.ai` / `vibe2ship2026` *(Note: credentials will rotate after judging closes)*
+* **WhatsApp Companion Sandbox:** Text `join samaype-ai` to `+1 415 523 8886`
 
 ---
 
-## 🌐 Live Demo & Judge Access
+## 1. Problem Statement Selected
+**Track:** *The Last-Minute Life Saver*
 
-* **Live Production URL:** **[https://samaype-ai-339043112543.us-central1.run.app](https://samaype-ai-339043112543.us-central1.run.app)**
-* **One-Click Judge Login:** Click **"One-Click Judge Demo Login 🚀"** directly on the `/login` page
-* **Manual Credentials:** Username: `judge@vibe2ship.ai` | Password: `vibe2ship2026` *(Note: credentials will rotate after judging closes)*
-* **Mobile Companion Sandbox:** Text **`join samaype-ai`** or **`menu`** to **`+1 415 523 8886`**
+Students, professionals, and developers suffer from chronic **Deadline Drift**. Traditional calendars and to-do lists are passive repositories—they remind you that a task exists, but do nothing when your workload becomes mathematically infeasible or cognitive fatigue sets in. When an unexpected roadblock occurs, passive tools force the user to manually reorganize dozen of commitments, triggering avoidance behaviors that spiral into missed submissions and severe burnout.
 
----
+## 2. Solution Overview
+**SamayPe.AI** moves beyond passive reminders by serving as an active, autonomous productivity guardian across **4 Cognitive Domains**: *Time Urgency*, *Career/Academic Impact*, *Cognitive Energy Demand*, and *Streak Velocity*. 
 
-## 🔥 The Problem
-Deadline tools today are passive. Calendars remind you a task exists; to-do apps let you check a box. Neither one notices when your workload has quietly become infeasible, neither renegotiates your schedule when something slips, and neither meets you where you actually are — on your phone, mid-conversation, not inside a dashboard tab you forgot to open. The result is the familiar spiral: a missed deadline cascades into three more, and by the time you notice, there's no good option left.
-
-## ⚡ The Solution
-SamayPe.AI is an agentic layer that sits on top of your commitments. It breaks goals into subtasks, continuously scores how much temporal risk each task is carrying, and — when something becomes unrealistic — actively reschedules around it rather than just flagging it. The same intelligence is reachable from a web dashboard or directly over mobile messaging, including by voice note or photo, so capturing a task never requires breaking your current flow.
+Powered by **Google Gemini 2.5 Flash**, the system breaks monolithic goals into achievable subtask roadmaps, scores temporal risk in real time, and—when a schedule slips—autonomously compresses durations and renegotiates deadlines into realistic focus blocks. This intelligence meets users where they already live: inside an interactive web dashboard or bi-directionally over **WhatsApp messaging** (including voice notes and photo attachments), ensuring zero cognitive friction.
 
 ---
 
-## 🏛️ System Architecture & Data Flow
+## 3. Google Technologies Utilized
 
-```
-User
- ├─ Web Dashboard (Next.js 15 / React 19)
- └─ WhatsApp Companion (Twilio Webhook) ─┐
-                                          ▼
-                         API Layer (Next.js Route Handlers)
-                                          │
-                                          ▼
-                   Reasoning Engine (text + vision + audio processing)
-                                          │
-                                          ▼
-                   Task Store ── Risk Scoring ── Auto-Reschedule
-                                          │
-                                          ▼
-                   Cron Engine (proactive alerts) ─→ back to User
-```
+SamayPe AI heavily integrates state-of-the-art Google infrastructure and models at every layer of the stack:
+
+1. **Google Gemini 2.5 Flash (`@google/genai` Official SDK)**
+   * **Structured Function Calling (`/api/decompose`):** Converts raw user goals into JSON subtask arrays with precise minutes estimation.
+   * **Multimodal Vision Parsing:** Reads syllabus photos, assignment screenshots, and error logs sent via WhatsApp to extract structured action items automatically.
+   * **Native Audio Processing:** Transcribes spoken Voice Notes sent over messaging or web audio capture into scheduled milestones.
+   * **Agentic Reasoning & Auto-Fix:** Evaluates multi-domain constraint conflicts and generates optimized schedule re-alignments.
+2. **Google Cloud Run (Serverless Container Platform)**
+   * Deployed as an auto-scaling, high-availability production Docker container (`samaype-ai-339043112543.us-central1.run.app`) ensuring instant webhook response times and zero maintenance overhead.
+3. **Google Cloud Build & Container Registry**
+   * Automated container build and registry orchestration for continuous deployment.
 
 ---
 
-## 📱 Bi-Directional Mobile Companion Engine
+## 4. Key Features & Agentic Capabilities
 
-SamayPe AI doesn't wait for you to log into a dashboard. It maintains an active, bi-directional webhook gateway that lets you manage your entire schedule on the go via messaging.
-
-### 📸 Live Mobile Companion in Action
-
-<div align="center">
-  <img src="public/screenshots/whatsapp-menu.jpg" width="45%" alt="Mobile Interactive Menu" />
-  &nbsp;&nbsp;&nbsp;&nbsp;
-  <img src="public/screenshots/whatsapp-planner.jpg" width="45%" alt="Mobile Task Planner" />
-</div>
-
----
-
-## 💎 Core Capabilities by Functional Tier
-
-### 1. Task Intelligence
-* **Goal Decomposition:** AI structured function calling (`/api/decompose`) turns a high-level goal into an ordered checklist with time estimates per subtask.
+### Tier 1: Task Intelligence & Autonomous Execution
+* **Goal Decomposition:** AI structured function calling turns high-level goals into ordered checklists with time estimates per subtask.
 * **Temporal Risk Scoring:** Every commitment carries a live risk score (0.0–1.0) computed from time remaining versus estimated workload, surfacing overload before it becomes a missed deadline.
 * **Autonomous Auto-Fix:** `/api/reschedule` compresses durations and realigns deadlines into feasible focus slots when risk crosses a critical threshold, while protecting flagged high-priority commitments.
-* **Agentic Thinking Visualizer:** A live telemetry view showing the reasoning pipeline's decomposition and constraint-checking steps in real time, rather than a black-box spinner.
+* **Agentic Thinking Visualizer:** A live telemetry view showing the reasoning pipeline's decomposition and constraint-checking steps in real time.
 
-### 2. Multichannel Capture
-* **WhatsApp Companion:** Serverless messaging webhook (`/api/whatsapp`) lets you create tasks, pull a schedule via "Menu"/"Schedule", or trigger a full reschedule via "Fix," all by text.
+### Tier 2: Multichannel Capture & Voice Assistance
+* **WhatsApp Companion:** Serverless messaging webhook (`/api/whatsapp`) lets you create tasks, pull daily schedules via "Menu", or trigger full reschedules via "Fix," all by text.
 * **Multimodal Parsing:** Voice notes and images (syllabi, error logs, screenshots) sent over messaging are parsed by multimodal vision/audio models into structured tasks automatically.
 * **Browser Voice Capture (`VoiceGoalButton.tsx`):** Native Web Audio transcription feeds straight into the same task-generation pipeline on desktop.
 
-### 3. Visibility & Coaching
-* **AI Coach (`/chat`):** A context-aware mentor that reads your live task state and, when a breach is unavoidable, drafts a professional extension-request email tailored to a professor, manager, or client.
-* **Calendar Grid (`/calendar`):** Chronological view of tasks and subtasks across domains.
+### Tier 3: Context-Aware Visibility & Coaching
+* **AI Coach (`/chat`):** A context-aware mentor that reads your live task state and drafts professional extension-request emails tailored to professors or managers when deadlines slip.
+* **Chronological Calendar Grid (`/calendar`):** Multi-domain visual timeline mapping active subtasks.
 * **Burnout & Load Analytics (`/insights`):** Tracks completion velocity and cognitive load distribution, flagging when density approaches burnout.
-* **Calibration (`/create-plan`, `/profile-setup`):** User-defined urgency, impact, and energy weightings personalize how the scheduler makes tradeoffs.
+* **Personal Calibration (`/create-plan`, `/profile-setup`):** User-defined urgency, impact, and energy weightings personalize how the scheduler makes tradeoffs.
 
-### 4. Habit & Community Layer
+### Tier 4: Habit Tracking & Peer Accountability
 * **Habit Tracking (`/habits`):** Streak tracking with AI pattern detection correlating consistency to deadline success.
-* **Peer Accountability (`/community`):** Anonymized leaderboard of momentum and execution streaks.
+* **Peer Accountability (`/community`):** Anonymized leaderboard of execution momentum and streaks.
 
-### 5. Ops & Judge Tooling
-* **Judge Evaluation HUD:** One-click edge-case injection (burnout drift, submission-crunch scenarios) plus QR onboarding to mobile messaging.
+### Tier 5: Evaluation & Ops Tooling
+* **Judge Evaluation HUD:** One-click edge-case injection (burnout drift, hackathon submission crunch) plus QR onboarding to WhatsApp.
 * **Background Reminders (`/api/cron/reminders`):** Scheduled audit job that dispatches proactive risk warnings before tasks go critical.
 
 ---
 
-## 📦 Open Source Libraries, Dependencies & Attribution
+## 5. Technologies Used (Open Source Stack)
 
-| Package / Library | Version | Role & Description | Source |
-| :--- | :--- | :--- | :--- |
-| **`next`** | `15.2.9` | Full-stack App Router framework, API endpoints | [github.com/vercel/next.js](https://github.com/vercel/next.js) |
-| **`react` & `react-dom`** | `19.2.4` | Core UI rendering engine and state tree | [github.com/facebook/react](https://github.com/facebook/react) |
-| **`@google/generative-ai`**| `^0.24.1` | Official SDK for reasoning, function calling, & vision | [github.com/google-gemini](https://github.com/google-gemini/generative-ai-js) |
-| **`framer-motion`** | `^12.42.0` | Declarative motion library powering HUD modals | [github.com/framer/motion](https://github.com/framer/motion) |
-| **`tailwindcss`** | `^4.0.0` | Utility-first CSS framework for responsive design | [github.com/tailwindlabs](https://github.com/tailwindlabs/tailwindcss) |
-| **`lucide-react`** | `^1.21.0` | Vector iconography suite for UI badges and controls | [github.com/lucide-icons](https://github.com/lucide-icons/lucide) |
-| **`recharts`** | `^3.9.0` | Responsive SVG charting library for `/insights` | [github.com/recharts/recharts](https://github.com/recharts/recharts) |
-| **`react-hot-toast`** | `^2.6.0` | Lightweight toast notifications for user feedback | [github.com/timolins](https://github.com/timolins/react-hot-toast) |
-| **`clsx` & `tailwind-merge`**| `^2.1.1` / `^3.6.0` | Conditional CSS class merging and utility utilities | [github.com/lukeed/clsx](https://github.com/lukeed/clsx) |
-| **`date-fns`** | `^4.4.0` | Temporal parsing and deadline risk duration math | [github.com/date-fns](https://github.com/date-fns/date-fns) |
-| **`uuid`** | `^14.0.1` | RFC-compliant unique identifier generation | [github.com/uuidjs/uuid](https://github.com/uuidjs/uuid) |
+| Layer | Technology | Architectural Purpose |
+| :--- | :--- | :--- |
+| **Full-Stack Framework** | Next.js 15.2.9 (App Router), React 19.2.4 | Server-Side Rendering, API Routes, & Client Components |
+| **AI Reasoning & Vision** | Google Gemini 2.5 Flash (`@google/genai` SDK) | Cognitive Decomposition, Risk Scoring, & Multimodal NLP |
+| **Messaging Infrastructure**| Twilio Serverless API | Bi-directional interactive chat & webhook payload processing |
+| **Styling & Motion** | Tailwind CSS v4, Framer Motion v12 | Responsive Cyber-Mecha UI & glassmorphism components |
+| **Charting & Analytics** | Recharts v3.9.0 | Responsive SVG data visualization for burnout analytics |
+| **Deployment Infrastructure**| Docker on Google Cloud Run | Auto-scaling serverless production environment |
 
 ---
 
-## 🚀 Local Development Setup
+## 6. Verification Steps for Judges
 
-1. **Clone the Repository:**
-   ```bash
-   git clone https://github.com/KRIWAL21/SamayPe.AI.git
-   cd SamayPe.AI
-   ```
-
-2. **Install Dependencies:**
-   ```bash
-   npm install
-   ```
-
-3. **Configure Environment Variables (`.env.local`):**
-   ```env
-   GEMINI_API_KEY=your_api_key_here
-   TWILIO_ACCOUNT_SID=your_twilio_sid
-   TWILIO_AUTH_TOKEN=your_twilio_auth_token
-   TWILIO_WHATSAPP_FROM=whatsapp:+14155238886
-   USER_WHATSAPP_NUMBER=whatsapp:+91yourphonenumber
-   ```
-
-4. **Run Dev Server:**
-   ```bash
-   npm run dev
-   ```
+1. Open the **Live Cloud Run URL** and sign in with the judge credentials (`judge@vibe2ship.ai` / `vibe2ship2026`).
+2. Click the floating **Judge Evaluation HUD** (bottom right) to inject test scenarios and inspect real-time AI telemetry.
+3. Watch a task's risk score update live, then click **AUTO-FIX ✨** on a critical item to confirm autonomous schedule compression.
+4. Open **AI Coach (`/chat`)** and ask for an extension request draft to confirm live context synchronization.
+5. Text, voice-note, or send a photo to the WhatsApp sandbox number (`+1 415 523 8886`) to verify end-to-end multimodal capture.
 
 ---
 
-## 🔮 What's Next
+## 7. What's Next & Roadmap
 * **Bi-Directional Calendar OAuth:** Native two-way synchronization with Google Calendar and Microsoft Outlook.
 * **Team Workload Balancing:** Multi-user organization workspaces that distribute collaborative subtasks based on peer burnout scores.
 * **Local Offline Agentic RAG:** Client-side vector storage for private offline study note indexing.
 
-## 👥 Team Credits
+## 8. Team
 * **Krishna Walia (`@KRIWAL21`)** — Lead Full-Stack AI & Agentic Systems Architect
