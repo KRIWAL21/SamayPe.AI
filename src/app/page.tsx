@@ -8,17 +8,18 @@ import WhatsAppWidget from '@/components/WhatsAppWidget';
 import JudgeEvaluationHUD from '@/components/JudgeEvaluationHUD';
 import AgenticThinkingModal from '@/components/AgenticThinkingModal';
 import VoiceGoalButton from '@/components/VoiceGoalButton';
+import ThemeToggle from '@/components/ThemeToggle';
 import { Task, Priority, RiskLevel } from '@/lib/types';
 import { Plus, Sparkles, Flame, CheckCircle2, AlertOctagon, TrendingUp, Calendar, Zap } from 'lucide-react';
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
 
-function getGreeting(): string {
+function getHeaderTitle(): string {
   const hour = new Date().getHours();
-  if (hour >= 5 && hour < 12) return 'Good morning';
-  if (hour >= 12 && hour < 17) return 'Good afternoon';
-  if (hour >= 17 && hour < 21) return 'Good evening';
-  return 'Good night';
+  if (hour >= 5 && hour < 12) return 'Morning Execution Command';
+  if (hour >= 12 && hour < 17) return 'Peak Velocity Horizon';
+  if (hour >= 17 && hour < 21) return 'Evening Milestone Roadmap';
+  return 'Late Night Sprint Mode';
 }
 
 export default function DashboardPage() {
@@ -266,10 +267,10 @@ export default function DashboardPage() {
         <div className="relative z-10">
           <div className="flex items-center space-x-2 text-xs font-mono font-bold uppercase tracking-widest text-cyan-400 mb-2">
             <Zap className="w-4 h-4 animate-bounce" />
-            <span>SYSTEM AWAKENED // DEADLINE GUARDIAN V2.5</span>
+            <span>DEADLINE GUARDIAN // AI CO-PILOT</span>
           </div>
           <h1 className="text-3xl sm:text-4xl font-black tracking-tight text-white flex items-center space-x-3">
-            <span>{getGreeting()}, <span className="gradient-text">Creator</span></span>
+            <span>{getHeaderTitle()} <span className="gradient-text">⚡</span></span>
           </h1>
           <p className="text-sm font-mono text-gray-300 mt-1.5 flex items-center space-x-2">
             <span className="w-2 h-2 rounded-full bg-green-400 animate-ping" />
@@ -278,7 +279,7 @@ export default function DashboardPage() {
         </div>
 
         <div className="flex flex-wrap items-center gap-3 relative z-10">
-          <WhatsAppWidget />
+          <ThemeToggle />
           <VoiceGoalButton onVoiceGoalCaptured={handleVoiceGoalCaptured} />
           <motion.button
             whileHover={{ scale: 1.03 }}
@@ -291,6 +292,8 @@ export default function DashboardPage() {
           </motion.button>
         </div>
       </div>
+
+      <WhatsAppWidget />
 
       {/* Analytics Overview Grid - Cyber HUD Style */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">

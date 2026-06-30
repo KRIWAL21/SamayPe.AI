@@ -67,9 +67,9 @@ export default function WhatsAppWidget() {
                 </span>
               )}
             </div>
-            <h3 className="text-xl font-bold text-white tracking-tight mt-1">Connect WhatsApp Companion 💬</h3>
+            <h3 className="text-xl font-bold text-white tracking-tight mt-1">Get the App on WhatsApp 💬</h3>
             <p className="text-xs sm:text-sm text-gray-300 mt-1 leading-relaxed">
-              Text complex goals or receive real-time autonomous schedule compression alerts on your phone. Powered by Twilio Sandbox &amp; Gemini 2.5 Flash.
+              No need to download or juggle separate apps! Schedule tasks, add events, check your daily planner, diagnose deadline risks, and ask AI anything—all on the go via the SamayPe AI WhatsApp Bot Companion.
             </p>
           </div>
         </div>

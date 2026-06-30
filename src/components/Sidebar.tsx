@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { LayoutDashboard, MessageSquare, CalendarDays, Flame, BarChart3, Zap, Sparkles, Users, UserCog, ShieldCheck, LogOut, Award } from 'lucide-react';
 import { motion } from 'framer-motion';
+import ThemeToggle from '@/components/ThemeToggle';
 
 const navItems = [
   { name: 'Dashboard', href: '/', icon: LayoutDashboard },
@@ -105,8 +106,9 @@ export default function Sidebar() {
           </nav>
 
           {/* User Profile Footer */}
-          {authUser ? (
-            <div className="mt-auto pt-4 border-t border-gray-800/60">
+          <div className="mt-auto pt-4 border-t border-gray-800/60 space-y-3">
+            <ThemeToggle />
+            {authUser ? (
               <div className="p-3.5 rounded-2xl bg-gradient-to-br from-purple-950/60 to-black border border-purple-500/30 flex items-center justify-between">
                 <div className="flex items-center space-x-2.5 overflow-hidden">
                   <div className="w-9 h-9 rounded-xl bg-purple-600/30 border border-purple-500/50 flex items-center justify-center text-lg flex-shrink-0">
@@ -128,7 +130,6 @@ export default function Sidebar() {
                   <LogOut className="w-4 h-4" />
                 </button>
               </div>
-            </div>
           ) : (
             <div className="p-4 rounded-2xl bg-gradient-to-br from-purple-900/40 to-blue-900/40 border border-purple-500/20 mt-auto">
               <div className="flex items-center space-x-2 text-purple-300 font-semibold text-xs uppercase tracking-wider">
@@ -137,6 +138,7 @@ export default function Sidebar() {
               <p className="text-xs text-gray-400 mt-1">Autonomous Agentic Mode Active</p>
             </div>
           )}
+          </div>
         </div>
       </aside>
 

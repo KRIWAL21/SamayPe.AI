@@ -84,3 +84,42 @@
   background: linear-gradient(to bottom, #7c3aed, #00f0ff);
   border-radius: 3px;
 }
+
+/* Light Mode Overrides */
+html.light {
+  --bg-primary: #f8fafc;
+  --bg-card: #ffffff;
+}
+
+html.light body {
+  background-color: #f8fafc !important;
+  background-image: 
+    radial-gradient(circle at 15% 50%, rgba(157, 78, 221, 0.06) 0%, transparent 45%),
+    radial-gradient(circle at 85% 30%, rgba(0, 240, 255, 0.06) 0%, transparent 45%),
+    linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px) !important;
+  color: #0f172a !important;
+}
+
+html.light .glass-panel {
+  background: rgba(255, 255, 255, 0.88) !important;
+  border-color: rgba(139, 92, 246, 0.25) !important;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.06) !important;
+  color: #0f172a !important;
+}
+
+html.light .glass-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(241, 245, 249, 0.98) 100%) !important;
+  border-color: rgba(139, 92, 246, 0.3) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05) !important;
+  color: #0f172a !important;
+}
+
+html.light .text-white {
+  color: #0f172a !important;
+}
+
+html.light .text-gray-300, html.light .text-gray-400 {
+  color: #475569 !important;
+}
+
