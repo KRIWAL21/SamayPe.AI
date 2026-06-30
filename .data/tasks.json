@@ -1,0 +1,269 @@
+[
+  {
+    "title": "🗓️ Master 7-Day Sprint Roadmap Execution",
+    "description": "Active commitments: hackathon, ml_project. Execution intensity: sprint.",
+    "category": "Sprint Roadmap",
+    "priority": "URGENT",
+    "status": "IN_PROGRESS",
+    "deadline": "2026-07-06T21:23:35.639Z",
+    "riskScore": 0.65,
+    "riskLevel": "HIGH",
+    "aiRecommendation": "⚡ Roadmap published. Maintain consistent daily velocity to prevent weekend drift.",
+    "subtasks": [
+      {
+        "id": "sprint-0",
+        "title": "Monday: Hackathon - Core ML Model Development & Data Pipeline Setup (10 hrs)",
+        "estimatedMinutes": 600,
+        "completed": false
+      },
+      {
+        "id": "sprint-1",
+        "title": "Tuesday: Hackathon - Feature Engineering, Experimentation & API Integration (10 hrs)",
+        "estimatedMinutes": 600,
+        "completed": false
+      },
+      {
+        "id": "sprint-2",
+        "title": "Wednesday: Hackathon - Front-end UI/UX Development & User Flow Implementation (9 hrs)",
+        "estimatedMinutes": 540,
+        "completed": false
+      },
+      {
+        "id": "sprint-3",
+        "title": "Thursday: Hackathon - System Integration, End-to-End Testing & Demo Preparation (12 hrs)",
+        "estimatedMinutes": 720,
+        "completed": false
+      },
+      {
+        "id": "sprint-4",
+        "title": "Friday: Hackathon - Final Submission, Documentation & Post-Mortem; ML Project - Initial Research Spike (8 hrs)",
+        "estimatedMinutes": 480,
+        "completed": false
+      },
+      {
+        "id": "sprint-5",
+        "title": "Saturday: ML Project - Architecture Design, Data Acquisition Strategy & Tooling Setup (8 hrs)",
+        "estimatedMinutes": 480,
+        "completed": false
+      },
+      {
+        "id": "sprint-6",
+        "title": "Sunday: ML Project - Environment Configuration, Initial Data Exploration & Baseline Model Prototyping (7 hrs)",
+        "estimatedMinutes": 420,
+        "completed": false
+      }
+    ],
+    "id": "task-1782768215755",
+    "createdAt": "2026-06-29T21:23:35.755Z",
+    "updatedAt": "2026-06-29T21:23:35.755Z"
+  },
+  {
+    "title": "🗓️ Master 7-Day Sprint Roadmap Execution",
+    "description": "Active commitments: hackathon, ml_project. Execution intensity: sprint.",
+    "category": "Sprint Roadmap",
+    "priority": "URGENT",
+    "status": "IN_PROGRESS",
+    "deadline": "2026-07-01T08:45:34.758Z",
+    "riskScore": 0.2,
+    "riskLevel": "LOW",
+    "aiRecommendation": "✨ Autonomously rescheduled! Moved non-critical subtasks to Sunday morning.",
+    "subtasks": [
+      {
+        "id": "sprint-0",
+        "title": "Monday: Hackathon Core Engine & Webhooks (8 hrs)",
+        "estimatedMinutes": 480,
+        "completed": true
+      },
+      {
+        "id": "sprint-1",
+        "title": "Tuesday: Twilio WhatsApp Sandbox & Voice UI (9 hrs)",
+        "estimatedMinutes": 540,
+        "completed": false
+      },
+      {
+        "id": "sprint-2",
+        "title": "Wednesday: Google Cloud Run Docker Deployment (7 hrs)",
+        "estimatedMinutes": 420,
+        "completed": false
+      },
+      {
+        "id": "sprint-3",
+        "title": "Thursday: ML Project Preprocessing & Feature Scaling (6 hrs)",
+        "estimatedMinutes": 360,
+        "completed": false
+      },
+      {
+        "id": "sprint-4",
+        "title": "Friday: Record 3-Min Walkthrough & Final Submit 🏆 (10 hrs)",
+        "estimatedMinutes": 600,
+        "completed": false
+      },
+      {
+        "id": "sprint-5",
+        "title": "Saturday: Draft IEEE Format LaTeX Report Section 1-3 (5 hrs)",
+        "estimatedMinutes": 300,
+        "completed": false
+      },
+      {
+        "id": "sprint-6",
+        "title": "Sunday: Rest, Recovery & Next Week Synchronization (2 hrs)",
+        "estimatedMinutes": 120,
+        "completed": false
+      }
+    ],
+    "id": "task-1782757651761",
+    "createdAt": "2026-06-29T18:27:31.761Z",
+    "updatedAt": "2026-06-29T20:45:44.833Z"
+  },
+  {
+    "title": "daily leetcode problems",
+    "description": "daily leetcode problems",
+    "category": "Work",
+    "priority": "HIGH",
+    "deadline": "2026-07-01T18:26:27.307Z",
+    "subtasks": [
+      {
+        "id": "sub-1782757587307-1",
+        "title": "Scope Analysis & Architecture Setup",
+        "estimatedMinutes": 30,
+        "completed": true
+      },
+      {
+        "id": "sub-1782757587307-2",
+        "title": "Execute Core Milestones & Logic",
+        "estimatedMinutes": 90,
+        "completed": false
+      },
+      {
+        "id": "sub-1782757587307-3",
+        "title": "QA Testing & Edge Case Verification",
+        "estimatedMinutes": 40,
+        "completed": true
+      },
+      {
+        "id": "sub-1782757587307-4",
+        "title": "Final Review & Production Deployment",
+        "estimatedMinutes": 20,
+        "completed": false
+      }
+    ],
+    "id": "task-1782757587307",
+    "status": "IN_PROGRESS",
+    "createdAt": "2026-06-29T18:26:27.307Z",
+    "updatedAt": "2026-06-29T20:45:59.286Z",
+    "riskScore": 0.06,
+    "riskLevel": "LOW",
+    "aiRecommendation": "You are comfortably on schedule. Steady pace recommended."
+  },
+  {
+    "id": "task-1",
+    "userId": "hackathon-user",
+    "title": "Submit Vibe2Ship AI Hackathon Solution",
+    "description": "Finalize agentic loop, record 3-min demo video, deploy to Google Cloud Run, and complete BlockseBlock submission.",
+    "deadline": "2026-06-30T08:26:04.416Z",
+    "priority": "URGENT",
+    "status": "IN_PROGRESS",
+    "category": "Hackathon Sprint",
+    "riskScore": 0.88,
+    "riskLevel": "CRITICAL",
+    "aiRecommendation": "🚨 URGENT: Only 14 hours left. Skip extra CSS tweaks and focus strictly on recording the demo video.",
+    "createdAt": "2026-06-29T18:26:04.417Z",
+    "updatedAt": "2026-06-29T18:26:04.417Z",
+    "subtasks": [
+      {
+        "id": "1-1",
+        "title": "Implement Gemini Function Calling Task Decomposer",
+        "estimatedMinutes": 45,
+        "completed": true
+      },
+      {
+        "id": "1-2",
+        "title": "Set up Twilio WhatsApp Bot Webhook",
+        "estimatedMinutes": 30,
+        "completed": true
+      },
+      {
+        "id": "1-3",
+        "title": "Deploy Docker Container to Google Cloud Run",
+        "estimatedMinutes": 40,
+        "completed": false
+      },
+      {
+        "id": "1-4",
+        "title": "Record walkthrough video showing autonomous rescheduling",
+        "estimatedMinutes": 30,
+        "completed": false
+      },
+      {
+        "id": "1-5",
+        "title": "Complete compulsory Step 5 on BlockseBlock dashboard",
+        "estimatedMinutes": 15,
+        "completed": false
+      }
+    ]
+  },
+  {
+    "id": "task-2",
+    "userId": "hackathon-user",
+    "title": "Advanced Machine Learning End-Semester Project",
+    "description": "Complete data preprocessing pipeline, train XGBoost model on GPU instance, and generate 15-page IEEE format report.",
+    "deadline": "2026-07-02T06:26:04.417Z",
+    "priority": "HIGH",
+    "status": "TODO",
+    "category": "Academics",
+    "riskScore": 0.62,
+    "riskLevel": "HIGH",
+    "aiRecommendation": "⚠️ High Risk: Large volume of report writing remaining. Suggest starting literature review tonight.",
+    "createdAt": "2026-06-29T18:26:04.417Z",
+    "updatedAt": "2026-06-29T18:26:04.417Z",
+    "subtasks": [
+      {
+        "id": "2-1",
+        "title": "Clean missing values & feature scaling",
+        "estimatedMinutes": 60,
+        "completed": true
+      },
+      {
+        "id": "2-2",
+        "title": "Hyperparameter tuning with Optuna",
+        "estimatedMinutes": 120,
+        "completed": false
+      },
+      {
+        "id": "2-3",
+        "title": "Draft IEEE format LaTeX report",
+        "estimatedMinutes": 180,
+        "completed": false
+      }
+    ]
+  },
+  {
+    "id": "task-3",
+    "userId": "hackathon-user",
+    "title": "Pay Electricity & Fiber Broadband Bills",
+    "description": "Avoid late fee disconnection penalties before month end.",
+    "deadline": "2026-07-04T18:26:04.417Z",
+    "priority": "MEDIUM",
+    "status": "TODO",
+    "category": "Personal",
+    "riskScore": 0.25,
+    "riskLevel": "LOW",
+    "aiRecommendation": "✅ On Track: Sufficient buffer remaining. Automated payment suggested.",
+    "createdAt": "2026-06-29T18:26:04.417Z",
+    "updatedAt": "2026-06-29T18:26:04.417Z",
+    "subtasks": [
+      {
+        "id": "3-1",
+        "title": "Login to utility portal and verify amount due",
+        "estimatedMinutes": 10,
+        "completed": false
+      },
+      {
+        "id": "3-2",
+        "title": "Complete UPI payment authorization",
+        "estimatedMinutes": 5,
+        "completed": false
+      }
+    ]
+  }
+]
