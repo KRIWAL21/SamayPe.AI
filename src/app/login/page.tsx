@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Zap, ShieldCheck, KeyRound, Mail, Lock, ArrowRight, Sparkles, Award } from 'lucide-react';
+import { Zap, Mail, Lock, Sparkles, Award, ArrowRight, ShieldCheck } from 'lucide-react';
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
 
@@ -14,7 +14,7 @@ export default function LoginPage() {
 
   const handleJudgeDemoLogin = () => {
     setLoading(true);
-    const toastId = toast.loading('⚡ Initializing Vibe2Ship Master Judge Persona...');
+    const toastId = toast.loading('Initializing Vibe2Ship Master Evaluator Session...');
 
     setTimeout(() => {
       if (typeof window !== 'undefined') {
@@ -26,10 +26,10 @@ export default function LoginPage() {
           isDemo: true
         }));
       }
-      toast.success('🎉 Welcome Judge! Full Demo Telemetry Loaded.', { id: toastId });
+      toast.success('Welcome Judge! Full Telemetry & Test Suite Loaded.', { id: toastId });
       setLoading(false);
       router.push('/');
-    }, 1000);
+    }, 800);
   };
 
   const handleCustomLogin = (e: React.FormEvent) => {
@@ -39,7 +39,7 @@ export default function LoginPage() {
       return;
     }
     setLoading(true);
-    const toastId = toast.loading('Authenticating via Firebase Auth Engine...');
+    const toastId = toast.loading('Authenticating identity...');
 
     setTimeout(() => {
       if (typeof window !== 'undefined') {
@@ -54,108 +54,117 @@ export default function LoginPage() {
       toast.success(`Welcome back, ${email}!`, { id: toastId });
       setLoading(false);
       router.push('/');
-    }, 800);
+    }, 700);
   };
 
   return (
-    <div className="min-h-[85vh] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-[82vh] flex items-center justify-center px-4 sm:px-6 lg:px-8 overflow-hidden">
       <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="max-w-md w-full space-y-8 glass-panel p-8 sm:p-10 rounded-3xl border border-purple-500/30 shadow-2xl relative overflow-hidden"
+        initial={{ opacity: 0, scale: 0.98 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.3 }}
+        className="max-w-4xl w-full glass-panel rounded-3xl border border-white/10 shadow-2xl relative overflow-hidden grid grid-cols-1 md:grid-cols-12"
       >
-        {/* Background glow */}
-        <div className="absolute -top-24 -right-24 w-64 h-64 bg-purple-600/20 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-blue-600/20 rounded-full blur-3xl pointer-events-none" />
+        {/* Ambient Glows */}
+        <div className="absolute -top-32 -left-32 w-80 h-80 bg-purple-600/15 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-32 -right-32 w-80 h-80 bg-blue-600/15 rounded-full blur-3xl pointer-events-none" />
 
-        {/* Header Logo */}
-        <div className="text-center relative z-10">
-          <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-purple-600 via-blue-600 to-cyan-400 mx-auto flex items-center justify-center shadow-xl shadow-purple-600/30 mb-4">
-            <Zap className="w-8 h-8 text-white animate-pulse" />
-          </div>
-          <span className="text-xs font-bold uppercase tracking-widest text-purple-400">Security Access Portal</span>
-          <h2 className="text-3xl font-extrabold text-white tracking-tight mt-1">SamayPe<span className="text-purple-400">.AI</span> Auth</h2>
-          <p className="text-sm text-gray-400 mt-2">
-            Sign in to access your autonomous deadline guardian and WhatsApp companion telemetry.
-          </p>
-        </div>
-
-        {/* 🏆 JUDGE / HACKATHON MASTER DEMO BOX */}
-        <div className="p-5 rounded-2xl bg-gradient-to-br from-purple-900/50 via-blue-900/30 to-black border-2 border-purple-500/60 shadow-lg relative z-10 space-y-3">
-          <div className="flex items-center justify-between">
-            <span className="flex items-center space-x-2 text-xs font-bold uppercase tracking-wider text-purple-300">
-              <Award className="w-4 h-4 text-yellow-400" />
-              <span>Vibe2Ship Judge Demo ID</span>
-            </span>
-            <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-purple-600/40 text-purple-200">INSTANT ACCESS</span>
-          </div>
-
-          <div className="text-xs text-gray-300 font-mono space-y-1 bg-black/40 p-3 rounded-xl border border-white/10">
-            <div><span className="text-gray-500">Email:</span> <span className="text-white font-semibold">judge@vibe2ship.ai</span></div>
-            <div><span className="text-gray-500">Pass:</span> <span className="text-white font-semibold">vibe2ship2026</span></div>
-            <div><span className="text-gray-500">Tier:</span> <span className="text-cyan-400 font-semibold">Master AI Evaluator (Unrestricted)</span></div>
-          </div>
-
-          <button
-            onClick={handleJudgeDemoLogin}
-            disabled={loading}
-            className="w-full flex items-center justify-center space-x-2 bg-gradient-to-r from-purple-600 via-blue-600 to-cyan-500 hover:opacity-95 text-white font-extrabold py-3 px-4 rounded-xl shadow-lg shadow-purple-600/30 transition-all cursor-pointer disabled:opacity-50"
-          >
-            <Sparkles className="w-5 h-5 animate-spin-slow" />
-            <span>One-Click Judge Demo Login 🚀</span>
-          </button>
-        </div>
-
-        <div className="relative z-10 flex items-center my-4">
-          <div className="flex-grow border-t border-gray-800" />
-          <span className="flex-shrink mx-4 text-xs font-medium uppercase text-gray-500 tracking-wider">Or Custom Login</span>
-          <div className="flex-grow border-t border-gray-800" />
-        </div>
-
-        {/* Standard Form */}
-        <form onSubmit={handleCustomLogin} className="space-y-4 relative z-10">
+        {/* LEFT PANEL: Judge Evaluation & Instant Access (7 Columns) */}
+        <div className="md:col-span-7 p-6 sm:p-8 flex flex-col justify-between border-b md:border-b-0 md:border-r border-white/10 relative z-10 bg-gradient-to-br from-purple-950/40 via-black/40 to-black/60">
           <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-1.5">Email Address</label>
-            <div className="relative">
-              <Mail className="w-5 h-5 text-gray-500 absolute left-3.5 top-3.5" />
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="creator@samaype.ai"
-                className="w-full bg-black/50 border border-gray-800 rounded-xl py-3 pl-11 pr-4 text-white placeholder-gray-600 text-sm focus:border-purple-500 focus:outline-none transition-all"
-              />
+            <div className="flex items-center space-x-3 mb-6">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-purple-600 to-blue-500 flex items-center justify-center shadow-lg shadow-purple-500/20">
+                <Zap className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <span className="text-[10px] font-bold uppercase tracking-widest text-purple-400 block">Security & Evaluation</span>
+                <h1 className="text-xl font-extrabold text-white tracking-tight">SamayPe<span className="text-purple-400">.AI</span> Portal</h1>
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <span className="flex items-center space-x-2 text-xs font-bold uppercase tracking-wider text-purple-300">
+                  <Award className="w-4 h-4 text-yellow-400" />
+                  <span>Vibe2Ship Hackathon Evaluation</span>
+                </span>
+                <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-purple-500/20 text-purple-300 border border-purple-500/30">INSTANT ACCESS</span>
+              </div>
+
+              <p className="text-xs text-gray-400 leading-relaxed">
+                Log in as an official evaluation judge to unlock unrestricted access to the real-time AI reasoning pipeline, live autonomous schedule compression, and test injectors.
+              </p>
+
+              <div className="text-xs font-mono bg-black/60 p-3.5 rounded-xl border border-white/10 space-y-1.5">
+                <div className="flex justify-between"><span className="text-gray-500">Judge ID:</span> <span className="text-white font-semibold">judge@vibe2ship.ai</span></div>
+                <div className="flex justify-between"><span className="text-gray-500">Password:</span> <span className="text-white font-semibold">vibe2ship2026</span></div>
+                <div className="flex justify-between"><span className="text-gray-500">Privileges:</span> <span className="text-cyan-400 font-semibold">Master AI Evaluator</span></div>
+              </div>
             </div>
           </div>
 
-          <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-1.5">Password</label>
-            <div className="relative">
-              <Lock className="w-5 h-5 text-gray-500 absolute left-3.5 top-3.5" />
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••••••"
-                className="w-full bg-black/50 border border-gray-800 rounded-xl py-3 pl-11 pr-4 text-white placeholder-gray-600 text-sm focus:border-purple-500 focus:outline-none transition-all"
-              />
-            </div>
+          <div className="mt-6">
+            <button
+              onClick={handleJudgeDemoLogin}
+              disabled={loading}
+              className="w-full flex items-center justify-center space-x-2 bg-gradient-to-r from-purple-600 via-blue-600 to-cyan-500 hover:opacity-95 text-white font-bold py-3 px-5 rounded-xl shadow-lg shadow-purple-600/25 transition-all cursor-pointer disabled:opacity-50 group"
+            >
+              <Sparkles className="w-4 h-4 text-yellow-300" />
+              <span className="text-sm">One-Click Judge Demo Login</span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </button>
+          </div>
+        </div>
+
+        {/* RIGHT PANEL: Custom User Sign In (5 Columns) */}
+        <div className="md:col-span-5 p-6 sm:p-8 flex flex-col justify-center relative z-10 bg-black/30">
+          <div className="mb-5">
+            <h2 className="text-sm font-bold uppercase tracking-wider text-gray-300">Standard Sign In</h2>
+            <p className="text-xs text-gray-500 mt-0.5">Enter your creator workspace credentials</p>
           </div>
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full flex items-center justify-center space-x-2 bg-gray-800 hover:bg-gray-700 text-white font-bold py-3 px-4 rounded-xl transition-all cursor-pointer disabled:opacity-50"
-          >
-            <span>Sign In to Dashboard</span>
-            <ArrowRight className="w-4 h-4" />
-          </button>
-        </form>
+          <form onSubmit={handleCustomLogin} className="space-y-4">
+            <div>
+              <label className="block text-[11px] font-semibold uppercase tracking-wider text-gray-400 mb-1">Email Address</label>
+              <div className="relative">
+                <Mail className="w-4 h-4 text-gray-500 absolute left-3 top-3.5" />
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="creator@samaype.ai"
+                  className="w-full bg-black/50 border border-white/10 rounded-xl py-2.5 pl-9 pr-3 text-white placeholder-gray-600 text-xs focus:border-purple-500 focus:outline-none transition-all"
+                />
+              </div>
+            </div>
 
-        <div className="pt-4 border-t border-gray-800/80 text-center relative z-10">
-          <p className="text-xs text-gray-500">
-            Protected by SamayPe AI Identity Guard & Firebase KMS
-          </p>
+            <div>
+              <label className="block text-[11px] font-semibold uppercase tracking-wider text-gray-400 mb-1">Password</label>
+              <div className="relative">
+                <Lock className="w-4 h-4 text-gray-500 absolute left-3 top-3.5" />
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="••••••••••••"
+                  className="w-full bg-black/50 border border-white/10 rounded-xl py-2.5 pl-9 pr-3 text-white placeholder-gray-600 text-xs focus:border-purple-500 focus:outline-none transition-all"
+                />
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full flex items-center justify-center space-x-2 bg-white/10 hover:bg-white/15 text-white font-semibold py-2.5 px-4 rounded-xl transition-all cursor-pointer disabled:opacity-50 border border-white/10 text-xs mt-2"
+            >
+              <span>Sign In to Dashboard</span>
+            </button>
+          </form>
+
+          <div className="mt-6 pt-4 border-t border-white/5 flex items-center justify-center space-x-1.5 text-[10px] text-gray-500">
+            <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+            <span>Protected by SamayPe AI Identity Guard</span>
+          </div>
         </div>
       </motion.div>
     </div>
