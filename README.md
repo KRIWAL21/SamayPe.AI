@@ -66,12 +66,15 @@ SamayPe AI doesn't wait for you to log into a dashboard. It maintains an active,
 
 ## ⚡ Core Functional & AI Features Summary
 
+* **🏆 Live Judge Evaluation HUD:** Floating Cyber-Mecha drawer with 1-click hackathon/burnout emergency scenario injection and instant WhatsApp QR/command walkthroughs.
+* **🔍 Live Agentic Thinking Process:** Real-time streaming neural visualizer (`AgenticThinkingModal`) that displays Gemini 2.5 cognitive decomposition and temporal vector mapping steps as they happen.
+* **🎙️ Voice Note Goal Capture (Web Audio API):** On-the-fly speech recognition button (`🎙️ VOICE GOAL`) that transcribes spoken goals directly into Gemini 2.5 autonomous subtask decomposition.
+* **📸 Multimodal WhatsApp Media Parser:** Automatically inspects incoming WhatsApp Voice Notes and Image Screenshots (`MediaUrl0`) via Twilio webhooks to extract action items and sync live roadmaps.
 * **🧠 Autonomous Goal Decomposition (Gemini 2.5):** Transforms high-level goals into estimated, bite-sized subtask checklists automatically upon creation.
 * **📱 Bi-Directional WhatsApp Companion Engine:** Full schedule control via Twilio webhooks—add tasks, check daily planners, diagnose urgent risks, and trigger AI auto-fixes directly over WhatsApp.
 * **🛡️ Proactive Auto-Fix Rescheduling:** Detects deadline drift and overloaded schedules, autonomously compressing and realigning tasks to feasible time slots with a single click.
 * **📊 Multi-Domain Priority Ranking:** Synthesizes time urgency, career/GPA impact, energy load, and streak velocity to dynamically rank and prioritize commitments in real time.
-* **🩺 Live Burnout & Velocity Diagnostics:** Tracks execution momentum and cognitive load distribution to alert users and suggest workload reductions before burnout occurs.
-* **🎙️ Multi-Channel Management Controls:** Rename, delete, complete subtasks, or reschedule commitments seamlessly across both the web application and phone interface.
+* **📈 Real-Time Coach & Schedule Sync:** AI Coach (`/chat`) and Schedule Grid (`/calendar`) synchronize dynamically with backend storage to plot pending subtasks and provide advice based on actual live tasks.
 
 ---
 
