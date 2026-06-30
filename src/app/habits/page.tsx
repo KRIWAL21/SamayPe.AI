@@ -15,29 +15,51 @@ interface Habit {
 }
 
 const initialHabits: Habit[] = [
-  { id: '1', title: 'Deep Work Focus (No Phone)', category: 'Productivity', streak: 14, completedToday: true, dots: [true, true, true, true, true, true, true] },
-  { id: '2', title: 'Morning Physical Exercise', category: 'Health', streak: 8, completedToday: false, dots: [true, true, false, true, true, true, false] },
-  { id: '3', title: 'Read 20 Pages of Tech Literature', category: 'Growth', streak: 22, completedToday: true, dots: [true, true, true, true, true, true, true] },
-  { id: '4', title: 'Evening Daily Planning Review', category: 'Mindset', streak: 5, completedToday: false, dots: [false, true, true, true, true, false, false] },
+  { id: '1', title: 'Revise LangChain & LLM Agentic Notes', category: 'AI Architecture', streak: 12, completedToday: false, dots: [true, true, true, false, true, true, false] },
+  { id: '2', title: 'Revise Machine Learning Core Algorithms', category: 'AI & ML', streak: 9, completedToday: true, dots: [true, true, true, true, false, true, true] },
+  { id: '3', title: 'Deep Work Focus (No Phone)', category: 'Productivity', streak: 14, completedToday: true, dots: [true, true, true, true, true, true, true] },
+  { id: '4', title: 'Morning Physical Exercise', category: 'Health', streak: 8, completedToday: false, dots: [true, true, false, true, true, true, false] },
+  { id: '5', title: 'Read 20 Pages of Tech Literature', category: 'Growth', streak: 22, completedToday: true, dots: [true, true, true, true, true, true, true] },
+  { id: '6', title: 'Evening Daily Planning Review', category: 'Mindset', streak: 5, completedToday: false, dots: [false, true, true, true, true, false, false] },
 ];
 
 export default function HabitsPage() {
   const [habits, setHabits] = useState<Habit[]>(initialHabits);
+
+  React.useEffect(() => {
+    const saved = localStorage.getItem('samaype_user_habits');
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.some(h => h.title?.includes('LangChain'))) {
+          setHabits(parsed);
+        } else {
+          localStorage.setItem('samaype_user_habits', JSON.stringify(initialHabits));
+        }
+      } catch (e) {
+        localStorage.setItem('samaype_user_habits', JSON.stringify(initialHabits));
+      }
+    }
+  }, []);
 
   const toggleHabit = (id: string) => {
     const target = habits.find(h => h.id === id);
     if (!target) return;
     const nextDone = !target.completedToday;
     toast.success(nextDone ? `🔥 +1 Streak! Keep going!` : 'Habit unchecked.');
-    setHabits(prev => prev.map(h => {
-      if (h.id !== id) return h;
-      return {
-        ...h,
-        completedToday: nextDone,
-        streak: nextDone ? h.streak + 1 : Math.max(0, h.streak - 1),
-        dots: [...h.dots.slice(1), nextDone]
-      };
-    }));
+    setHabits(prev => {
+      const updated = prev.map(h => {
+        if (h.id !== id) return h;
+        return {
+          ...h,
+          completedToday: nextDone,
+          streak: nextDone ? h.streak + 1 : Math.max(0, h.streak - 1),
+          dots: [...h.dots.slice(1), nextDone]
+        };
+      });
+      localStorage.setItem('samaype_user_habits', JSON.stringify(updated));
+      return updated;
+    });
   };
 
   return (

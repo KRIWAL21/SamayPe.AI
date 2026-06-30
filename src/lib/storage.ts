@@ -101,6 +101,44 @@ const defaultTasks: Task[] = [
       { id: '5-1', title: 'Inspect database connection pool limits', estimatedMinutes: 30, completed: true },
       { id: '5-2', title: 'Deploy exponential backoff retry handler', estimatedMinutes: 45, completed: false }
     ]
+  },
+  {
+    id: 'task-6',
+    userId: 'demo-user',
+    title: 'Revise LangChain Notes & Agentic Memory Patterns',
+    description: 'Review LCEL (LangChain Expression Language), tool-calling loops, and vector database indexing techniques.',
+    deadline: new Date(Date.now() + 1000 * 60 * 60 * 120).toISOString(),
+    priority: Priority.MEDIUM,
+    status: 'TODO' as any,
+    category: 'AI Study',
+    riskScore: 0.22,
+    riskLevel: RiskLevel.LOW,
+    aiRecommendation: '📚 Core AI Mastery: Practice implementing custom Runnable sequences and callback handlers.',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    subtasks: [
+      { id: '6-1', title: 'Review LangChain LCEL pipeline piping logic', estimatedMinutes: 35, completed: true },
+      { id: '6-2', title: 'Practice multi-agent supervisor graph implementation', estimatedMinutes: 50, completed: false }
+    ]
+  },
+  {
+    id: 'task-7',
+    userId: 'demo-user',
+    title: 'Revise Core ML Algos & Mathematics',
+    description: 'Re-derive backpropagation equations, gradient boosting decision trees (XGBoost), and self-attention matrices.',
+    deadline: new Date(Date.now() + 1000 * 60 * 60 * 144).toISOString(),
+    priority: Priority.LOW,
+    status: 'TODO' as any,
+    category: 'Academics',
+    riskScore: 0.12,
+    riskLevel: RiskLevel.LOW,
+    aiRecommendation: '💡 Deep Tech Foundation: Consistent revision prevents foundational decay. Allocate 45 mins every second day.',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    subtasks: [
+      { id: '7-1', title: 'Derive softmax cross-entropy gradient derivations', estimatedMinutes: 40, completed: true },
+      { id: '7-2', title: 'Compare Random Forest vs Gradient Boosted Trees variance', estimatedMinutes: 45, completed: false }
+    ]
   }
 ];
 
@@ -115,7 +153,7 @@ export function getTasks(): Task[] {
     }
     const data = fs.readFileSync(TASKS_FILE, 'utf-8');
     const parsed = JSON.parse(data);
-    if (Array.isArray(parsed) && parsed.some((t: Task) => t.title?.includes('Vibe2Ship AI Hackathon Solution'))) {
+    if (Array.isArray(parsed) && (parsed.some((t: Task) => t.title?.includes('Vibe2Ship AI Hackathon Solution')) || !parsed.some((t: Task) => t.title?.includes('Revise LangChain Notes')))) {
       fs.writeFileSync(TASKS_FILE, JSON.stringify(defaultTasks, null, 2), 'utf-8');
       return defaultTasks;
     }
