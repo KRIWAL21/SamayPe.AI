@@ -5,6 +5,9 @@ import { useRouter } from 'next/navigation';
 import TaskCard from '@/components/TaskCard';
 import AddTaskModal from '@/components/AddTaskModal';
 import WhatsAppWidget from '@/components/WhatsAppWidget';
+import JudgeEvaluationHUD from '@/components/JudgeEvaluationHUD';
+import AgenticThinkingModal from '@/components/AgenticThinkingModal';
+import VoiceGoalButton from '@/components/VoiceGoalButton';
 import { Task, Priority, RiskLevel } from '@/lib/types';
 import { Plus, Sparkles, Flame, CheckCircle2, AlertOctagon, TrendingUp, Calendar, Zap } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -22,6 +25,9 @@ export default function DashboardPage() {
   const router = useRouter();
   const [tasks, setTasks] = useState<Task[]>([]);
   const [modalOpen, setModalOpen] = useState(false);
+  const [thinkingOpen, setThinkingOpen] = useState(false);
+  const [thinkingTitle, setThinkingTitle] = useState('Autonomous Cognitive Decomposition');
+  const [pendingAction, setPendingAction] = useState<(() => void) | null>(null);
 
   const fetchTasks = async () => {
     try {
@@ -77,29 +83,136 @@ export default function DashboardPage() {
     } catch (e) {}
   };
 
-  const handleReschedule = async (taskId: string) => {
-    const toastId = toast.loading('🤖 Gemini 2.5 Flash Autonomous Agent is analyzing schedule & optimizing slots...');
-    try {
-      const res = await fetch('/api/reschedule', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ taskId })
-      });
-      const data = await res.json();
-      if (data.success && data.task) {
-        setTasks(prev => prev.map(t => t.id === taskId ? data.task : t));
-        toast.success('Schedule autonomously optimized & persisted!', { id: toastId });
-      } else {
-        throw new Error(data.error || 'Failed');
+  const handleReschedule = (taskId: string) => {
+    setThinkingTitle('Proactive Auto-Fix Rescheduling');
+    setPendingAction(() => async () => {
+      const toastId = toast.loading('🤖 Realigning deadline against circadian energy curves...');
+      try {
+        const res = await fetch('/api/reschedule', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ taskId })
+        });
+        const data = await res.json();
+        if (data.success && data.task) {
+          setTasks(prev => prev.map(t => t.id === taskId ? data.task : t));
+          toast.success('Schedule autonomously optimized & persisted!', { id: toastId });
+        } else {
+          throw new Error(data.error || 'Failed');
+        }
+      } catch (e: any) {
+        toast.error('Failed to auto-reschedule task', { id: toastId });
       }
-    } catch (e: any) {
-      toast.error('Failed to auto-reschedule task', { id: toastId });
-    }
+    });
+    setThinkingOpen(true);
   };
 
   const handleTaskCreated = (newTask: Task) => {
-    setTasks(prev => [newTask, ...prev]);
-    fetchTasks();
+    setThinkingTitle('Autonomous Goal Decomposition');
+    setPendingAction(() => () => {
+      setTasks(prev => [newTask, ...prev]);
+      fetchTasks();
+    });
+    setThinkingOpen(true);
+  };
+
+  const handleVoiceGoalCaptured = async (transcript: string) => {
+    setThinkingTitle('Voice Goal Parsing & Decomposition');
+    setThinkingOpen(true);
+    setPendingAction(() => async () => {
+      try {
+        const res = await fetch('/api/decompose', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ title: transcript, description: 'Captured via Voice Command HUD' })
+        });
+        const data = await res.json();
+        if (data.success && data.task) {
+          await fetch('/api/tasks', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data.task)
+          });
+          setTasks(prev => [data.task, ...prev]);
+          toast.success('Voice goal decomposed & scheduled!');
+        }
+      } catch (e) {
+        toast.error('Failed to process voice goal.');
+      }
+    });
+  };
+
+  const handleInjectScenario = async (scenarioType: 'burnout' | 'hackathon') => {
+    setThinkingTitle(scenarioType === 'burnout' ? 'Simulating Burnout Risk Drift' : 'Decomposing Hackathon Submission');
+    setThinkingOpen(true);
+    setPendingAction(() => async () => {
+      const simulatedTasks: any[] = scenarioType === 'burnout' ? [
+        {
+          id: `sim-b1-${Date.now()}`,
+          title: 'Advanced Machine Learning Project Submission',
+          description: 'Emergency overload injection',
+          priority: Priority.URGENT,
+          riskLevel: RiskLevel.CRITICAL,
+          deadline: new Date(Date.now() + 3600000).toISOString(),
+          dueDate: new Date(Date.now() + 3600000).toISOString(),
+          estimatedMinutes: 240,
+          status: 'PENDING' as any,
+          subtasks: [
+            { id: 'st1', title: 'Train Transformer model weights', estimatedMinutes: 120, completed: false },
+            { id: 'st2', title: 'Compile latex evaluation report', estimatedMinutes: 120, completed: false }
+          ],
+          aiRecommendation: '🚨 CRITICAL OVERLOAD: Defer Latex report to tomorrow morning when cognitive energy peak returns.',
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString()
+        },
+        {
+          id: `sim-b2-${Date.now()}`,
+          title: 'Operating Systems Kernel Patch Debugging',
+          description: 'High risk kernel deadlock bug',
+          priority: Priority.HIGH,
+          riskLevel: RiskLevel.HIGH,
+          deadline: new Date(Date.now() + 7200000).toISOString(),
+          dueDate: new Date(Date.now() + 7200000).toISOString(),
+          estimatedMinutes: 180,
+          status: 'PENDING' as any,
+          subtasks: [{ id: 'st1', title: 'Inspect mutex lock traces', estimatedMinutes: 180, completed: false }],
+          aiRecommendation: 'Break into 25m Pomodoro intervals to prevent mental fatigue.',
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString()
+        }
+      ] : [
+        {
+          id: `sim-h1-${Date.now()}`,
+          title: 'Submit Vibe2Ship AI Hackathon Pitch & Demo Deck',
+          description: 'Final submission countdown',
+          priority: Priority.URGENT,
+          riskLevel: RiskLevel.CRITICAL,
+          deadline: new Date(Date.now() + 18000000).toISOString(),
+          dueDate: new Date(Date.now() + 18000000).toISOString(),
+          estimatedMinutes: 120,
+          status: 'PENDING' as any,
+          subtasks: [
+            { id: 'st1', title: 'Record 2-minute Loom walkthrough video', estimatedMinutes: 30, completed: true },
+            { id: 'st2', title: 'Test Twilio WhatsApp interactive menu', estimatedMinutes: 15, completed: true },
+            { id: 'st3', title: 'Verify Judge Demo bypass credentials', estimatedMinutes: 10, completed: true },
+            { id: 'st4', title: 'Push final clean commit to GitHub main', estimatedMinutes: 10, completed: true },
+            { id: 'st5', title: 'Submit BlockseBlock submission portal link', estimatedMinutes: 15, completed: false }
+          ],
+          aiRecommendation: '🎯 YOU ARE ON TRACK! Complete step 5 right now to secure early evaluation.',
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString()
+        }
+      ];
+
+      for (const t of simulatedTasks) {
+        await fetch('/api/tasks', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(t)
+        });
+      }
+      fetchTasks();
+    });
   };
 
   const handleDeleteTask = async (taskId: string) => {
@@ -164,8 +277,9 @@ export default function DashboardPage() {
           </p>
         </div>
 
-        <div className="flex items-center space-x-3 relative z-10">
+        <div className="flex flex-wrap items-center gap-3 relative z-10">
           <WhatsAppWidget />
+          <VoiceGoalButton onVoiceGoalCaptured={handleVoiceGoalCaptured} />
           <motion.button
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
@@ -239,6 +353,20 @@ export default function DashboardPage() {
         onClose={() => setModalOpen(false)} 
         onTaskCreated={handleTaskCreated}
       />
+
+      <AgenticThinkingModal
+        isOpen={thinkingOpen}
+        title={thinkingTitle}
+        onComplete={() => {
+          setThinkingOpen(false);
+          if (pendingAction) {
+            pendingAction();
+            setPendingAction(null);
+          }
+        }}
+      />
+
+      <JudgeEvaluationHUD onInjectScenario={handleInjectScenario} />
     </div>
   );
 }

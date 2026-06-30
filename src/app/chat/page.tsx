@@ -33,6 +33,27 @@ export default function ChatPage() {
   const [messages, setMessages] = useState<Message[]>(initialMessages);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
+  const [tasks, setTasks] = useState<any[]>([]);
+
+  React.useEffect(() => {
+    fetch('/api/tasks')
+      .then(res => res.json())
+      .then(data => {
+        if (data.success && data.tasks) {
+          setTasks(data.tasks);
+          const activeCount = data.tasks.filter((t: any) => t.status !== 'COMPLETED').length;
+          setMessages([
+            {
+              id: 'init-live',
+              role: 'assistant',
+              content: `Hi Creator! I'm SamayPe AI, your autonomous deadline guardian. I'm currently monitoring ${activeCount} active commitments on your live dashboard. Ask me anything about your roadmap!`,
+              timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+            }
+          ]);
+        }
+      })
+      .catch(e => console.error(e));
+  }, []);
 
   const handleSend = async (textToSend: string) => {
     if (!textToSend.trim()) return;
@@ -52,7 +73,7 @@ export default function ChatPage() {
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: textToSend, currentTasks: [] }),
+        body: JSON.stringify({ message: textToSend, currentTasks: tasks }),
       });
 
       const data = await res.json();

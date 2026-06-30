@@ -47,16 +47,17 @@ export default function CalendarPage() {
   // Generate schedule blocks from actual tasks and their subtasks
   const scheduleBlocks = tasks
     .filter(t => t.status !== 'COMPLETED')
-    .sort((a, b) => new Date(a.deadline).getTime() - new Date(b.deadline).getTime())
+    .sort((a, b) => new Date((a as any).deadline || (a as any).dueDate || Date.now()).getTime() - new Date((b as any).deadline || (b as any).dueDate || Date.now()).getTime())
     .flatMap(task => {
+      const targetDate = (task as any).deadline || (task as any).dueDate || new Date().toISOString();
       if (task.subtasks && task.subtasks.length > 0) {
         return task.subtasks
           .filter(st => !st.completed)
           .map(st => ({
             id: st.id,
-            day: getRelativeDay(task.deadline),
+            day: getRelativeDay(targetDate),
             title: st.title,
-            time: `~${st.estimatedMinutes}m`,
+            time: `~${st.estimatedMinutes || 30}m`,
             priority: task.priority,
             color: getPriorityColor(task.priority),
             parentTask: task.title,
@@ -64,7 +65,7 @@ export default function CalendarPage() {
       }
       return [{
         id: task.id,
-        day: getRelativeDay(task.deadline),
+        day: getRelativeDay(targetDate),
         title: task.title,
         time: 'Full block',
         priority: task.priority,
