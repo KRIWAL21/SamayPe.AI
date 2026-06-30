@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Metadata } from 'next';
-import Sidebar from '@/components/Sidebar';
+import AppLayoutShell from '@/components/AppLayoutShell';
 import { Toaster } from 'react-hot-toast';
 import './globals.css';
 
@@ -17,12 +17,9 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className="min-h-screen bg-[#0a0a0f] text-gray-100 flex flex-col md:flex-row antialiased selection:bg-purple-500 selection:text-white">
-        <Sidebar />
-        <main className="flex-1 md:pl-64 pb-20 md:pb-0 min-h-screen">
-          <div className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
-            {children}
-          </div>
-        </main>
+        <AppLayoutShell>
+          {children}
+        </AppLayoutShell>
         <Toaster 
           position="bottom-right" 
           toastOptions={{
