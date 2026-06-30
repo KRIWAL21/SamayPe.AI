@@ -19,17 +19,17 @@ export default function TaskCard({ task, onToggleSubtask, onReschedule, onDelete
   const [editedTitle, setEditedTitle] = useState(task.title);
 
   const priorityColors: Record<Priority, { badge: string, borderLeft: string, glow: string }> = {
-    [Priority.URGENT]: { badge: 'bg-red-500/20 text-red-400 border-red-500/50 shadow-[0_0_10px_rgba(239,68,68,0.3)]', borderLeft: 'border-l-red-500', glow: 'hover:border-red-500/60' },
-    [Priority.HIGH]: { badge: 'bg-orange-500/20 text-orange-400 border-orange-500/50 shadow-[0_0_10px_rgba(249,115,22,0.3)]', borderLeft: 'border-l-orange-500', glow: 'hover:border-orange-500/60' },
-    [Priority.MEDIUM]: { badge: 'bg-cyan-500/20 text-cyan-400 border-cyan-500/50 shadow-[0_0_10px_rgba(6,182,212,0.3)]', borderLeft: 'border-l-cyan-400', glow: 'hover:border-cyan-400/60' },
-    [Priority.LOW]: { badge: 'bg-green-500/20 text-green-400 border-green-500/50 shadow-[0_0_10px_rgba(34,197,94,0.3)]', borderLeft: 'border-l-green-500', glow: 'hover:border-green-500/60' },
+    [Priority.URGENT]: { badge: 'bg-red-500/15 dark:bg-red-500/20 text-red-700 dark:text-red-400 border-red-500/40 dark:border-red-500/50 shadow-[0_0_10px_rgba(239,68,68,0.2)]', borderLeft: 'border-l-red-500', glow: 'hover:border-red-500/60' },
+    [Priority.HIGH]: { badge: 'bg-orange-500/15 dark:bg-orange-500/20 text-orange-700 dark:text-orange-400 border-orange-500/40 dark:border-orange-500/50 shadow-[0_0_10px_rgba(249,115,22,0.2)]', borderLeft: 'border-l-orange-500', glow: 'hover:border-orange-500/60' },
+    [Priority.MEDIUM]: { badge: 'bg-cyan-500/15 dark:bg-cyan-500/20 text-cyan-800 dark:text-cyan-400 border-cyan-500/40 dark:border-cyan-500/50 shadow-[0_0_10px_rgba(6,182,212,0.2)]', borderLeft: 'border-l-cyan-400', glow: 'hover:border-cyan-400/60' },
+    [Priority.LOW]: { badge: 'bg-green-500/15 dark:bg-green-500/20 text-green-800 dark:text-green-400 border-green-500/40 dark:border-green-500/50 shadow-[0_0_10px_rgba(34,197,94,0.2)]', borderLeft: 'border-l-green-500', glow: 'hover:border-green-500/60' },
   };
 
   const riskBadges: Record<RiskLevel, { text: string, color: string }> = {
-    [RiskLevel.CRITICAL]: { text: '🚨 CRITICAL DRIFT', color: 'text-red-400 bg-red-950/60 border-red-500 animate-pulse' },
-    [RiskLevel.HIGH]: { text: '⚠️ HIGH RISK', color: 'text-orange-400 bg-orange-950/60 border-orange-500' },
-    [RiskLevel.MEDIUM]: { text: '⚡ MODERATE', color: 'text-cyan-400 bg-cyan-950/60 border-cyan-500' },
-    [RiskLevel.LOW]: { text: '✅ SYNCHRONIZED', color: 'text-green-400 bg-green-950/60 border-green-500' },
+    [RiskLevel.CRITICAL]: { text: '🚨 CRITICAL DRIFT', color: 'text-red-700 dark:text-red-400 bg-red-500/15 dark:bg-red-950/60 border-red-500/60 dark:border-red-500 animate-pulse font-bold' },
+    [RiskLevel.HIGH]: { text: '⚠️ HIGH RISK', color: 'text-orange-700 dark:text-orange-400 bg-orange-500/15 dark:bg-orange-950/60 border-orange-500/60 dark:border-orange-500 font-bold' },
+    [RiskLevel.MEDIUM]: { text: '⚡ MODERATE', color: 'text-cyan-800 dark:text-cyan-400 bg-cyan-500/15 dark:bg-cyan-950/60 border-cyan-500/60 dark:border-cyan-500 font-bold' },
+    [RiskLevel.LOW]: { text: '✅ SYNCHRONIZED', color: 'text-green-800 dark:text-green-400 bg-green-500/15 dark:bg-green-950/60 border-green-500/60 dark:border-green-500 font-bold' },
   };
 
   const completedSubtasks = (task.subtasks || []).filter(st => st.completed).length;
@@ -68,7 +68,7 @@ export default function TaskCard({ task, onToggleSubtask, onReschedule, onDelete
             <span className={`px-3 py-1 rounded-md text-xs font-mono font-bold uppercase tracking-wider border ${risk.color}`}>
               {risk.text}
             </span>
-            <span className="text-xs font-mono text-purple-300 px-3 py-1 rounded-md bg-purple-900/30 border border-purple-500/30">
+            <span className="text-xs font-mono font-bold text-purple-800 dark:text-purple-300 px-3 py-1 rounded-md bg-purple-500/15 dark:bg-purple-900/30 border border-purple-400/50 dark:border-purple-500/30">
               ⚡ {task.category}
             </span>
           </div>
@@ -131,13 +131,13 @@ export default function TaskCard({ task, onToggleSubtask, onReschedule, onDelete
 
       {/* Progress Bar & Deadline Countdown */}
       <div className="mt-5 pt-4 border-t border-purple-500/20 flex flex-col sm:flex-row sm:items-center justify-between gap-4 relative z-10">
-        <div className="flex items-center space-x-2 text-xs font-mono uppercase tracking-wider text-gray-300">
-          <Clock className="w-4 h-4 text-cyan-400" />
-          <span>TARGET DEADLINE: <strong className="text-white font-bold">{new Date(task.deadline).toLocaleDateString()}</strong></span>
+        <div className="flex items-center space-x-2 text-xs font-mono uppercase tracking-wider text-gray-600 dark:text-gray-300">
+          <Clock className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
+          <span>TARGET DEADLINE: <strong className="text-gray-900 dark:text-white font-bold">{new Date(task.deadline).toLocaleDateString()}</strong></span>
         </div>
 
         <div className="flex items-center space-x-3 sm:w-1/2">
-          <div className="flex-1 bg-black/60 rounded-full h-2.5 overflow-hidden border border-purple-500/30">
+          <div className="flex-1 bg-gray-200 dark:bg-black/60 rounded-full h-2.5 overflow-hidden border border-purple-500/30">
             <motion.div
               initial={{ width: 0 }}
               animate={{ width: `${progressPct}%` }}
@@ -145,7 +145,7 @@ export default function TaskCard({ task, onToggleSubtask, onReschedule, onDelete
               className="bg-gradient-to-r from-purple-500 via-blue-500 to-cyan-400 h-full rounded-full shadow-[0_0_10px_rgba(0,240,255,0.6)]"
             />
           </div>
-          <span className="text-xs font-mono font-black text-cyan-400 min-w-[36px] text-right">{progressPct}%</span>
+          <span className="text-xs font-mono font-black text-cyan-600 dark:text-cyan-400 min-w-[36px] text-right">{progressPct}%</span>
         </div>
       </div>
 
@@ -155,18 +155,18 @@ export default function TaskCard({ task, onToggleSubtask, onReschedule, onDelete
           onClick={() => setExpanded(!expanded)}
           className={`w-full flex items-center justify-between px-4 py-3 rounded-xl font-mono text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
             expanded 
-              ? 'bg-purple-900/40 text-cyan-300 border border-cyan-500/50 shadow-[0_0_15px_rgba(0,240,255,0.2)]' 
-              : 'bg-white/[0.03] hover:bg-purple-600/20 text-gray-300 hover:text-white border border-purple-500/30'
+              ? 'bg-purple-100 dark:bg-purple-900/40 text-purple-900 dark:text-cyan-300 border border-purple-500/50 dark:border-cyan-500/50 shadow-[0_0_15px_rgba(0,240,255,0.2)]' 
+              : 'bg-gray-100 dark:bg-white/[0.03] hover:bg-purple-200 dark:hover:bg-purple-600/20 text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white border border-purple-500/30'
           }`}
         >
           <div className="flex items-center space-x-2.5">
-            <Zap className={`w-4 h-4 ${expanded ? 'text-cyan-400 animate-pulse' : 'text-purple-400'}`} />
+            <Zap className={`w-4 h-4 ${expanded ? 'text-cyan-600 dark:text-cyan-400 animate-pulse' : 'text-purple-600 dark:text-purple-400'}`} />
             <span>SUBTASK ROADMAP &amp; AI DIAGNOSTICS</span>
-            <span className="px-2 py-0.5 rounded bg-black/50 text-cyan-400 border border-cyan-500/30">
+            <span className="px-2 py-0.5 rounded bg-white dark:bg-black/50 text-cyan-700 dark:text-cyan-400 border border-cyan-500/30 font-extrabold">
               {completedSubtasks}/{totalSubtasks} STEPS
             </span>
           </div>
-          <div className="flex items-center space-x-1 text-purple-300">
+          <div className="flex items-center space-x-1 text-purple-700 dark:text-purple-300 font-extrabold">
             <span>{expanded ? 'COLLAPSE' : 'EXPAND ROADMAP'}</span>
             {expanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
           </div>
