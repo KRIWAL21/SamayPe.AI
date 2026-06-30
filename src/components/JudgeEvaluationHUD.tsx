@@ -31,12 +31,13 @@ export default function JudgeEvaluationHUD({ onInjectScenario }: JudgeEvaluation
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 z-50 flex items-center space-x-3 bg-gradient-to-r from-cyan-500 via-purple-600 to-pink-600 p-[2px] rounded-full shadow-[0_0_25px_rgba(0,240,255,0.6)] cursor-pointer group"
+        className="fixed bottom-20 md:bottom-6 right-3 md:right-6 z-50 flex items-center space-x-3 bg-gradient-to-r from-cyan-500 via-purple-600 to-pink-600 p-[2px] rounded-full shadow-[0_0_25px_rgba(0,240,255,0.6)] cursor-pointer group"
       >
-        <div className="bg-[#05050a] px-5 py-3 rounded-full flex items-center space-x-2">
-          <Sparkles className="w-5 h-5 text-cyan-400 animate-spin" style={{ animationDuration: '4s' }} />
-          <span className="font-mono font-black text-xs uppercase tracking-widest bg-gradient-to-r from-cyan-400 via-purple-300 to-pink-400 bg-clip-text text-transparent">
-            ⚡ Judge Evaluation Tour // AI HUD
+        <div className="bg-[#05050a] px-3.5 sm:px-5 py-2.5 sm:py-3 rounded-full flex items-center space-x-2">
+          <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400 animate-spin" style={{ animationDuration: '4s' }} />
+          <span className="font-mono font-black text-[10px] sm:text-xs uppercase tracking-widest bg-gradient-to-r from-cyan-400 via-purple-300 to-pink-400 bg-clip-text text-transparent">
+            <span className="sm:hidden">⚡ JUDGE TOUR</span>
+            <span className="hidden sm:inline">⚡ Judge Evaluation Tour // AI HUD</span>
           </span>
           <span className="w-2 h-2 rounded-full bg-green-400 animate-ping" />
         </div>
