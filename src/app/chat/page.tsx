@@ -93,9 +93,17 @@ export default function ChatPage() {
       console.error(error);
       // Fallback local response for hackathon offline demo continuity
       setTimeout(() => {
-        let reply = "I have autonomously synchronized your schedule! Based on your current workload, I recommend focusing exclusively on your Hackathon Demo Video for the next 90 minutes.";
-        if (textToSend.includes('email') || textToSend.includes('extension')) {
-          reply = "Drafted Extension Email:\n\nSubject: Request for Deadline Extension — ML Project\n\nDear Professor,\n\nI am writing to respectfully request a 48-hour extension for our end-semester project. While the data preprocessing pipeline is complete, GPU model training required additional time.\n\nThank you for your consideration.";
+        const lower = textToSend.toLowerCase();
+        let reply = "✨ **SamayPe AI Cognitive Guidance:**\n\nI am actively synchronizing your workflow across your active commitments.\n\nYour execution velocity is currently stable. To maximize productivity today, I recommend focusing on your highest priority task for the next 45 minutes. Let me know if you need me to decompose any subtasks or adjust your calendar slots!";
+
+        if (lower.includes('highest risk') || lower.includes('risk') || lower.includes('deadline')) {
+          reply = "🚨 **Highest Risk Commitment Analysis:**\n\nYour most critical temporal priority right now is **\"System Architecture & Microservice API Review\"** (Target: **This Week**).\n\n* **Status & Drift:** Flagged as **MODERATE** due to impending deadline compression.\n* **Autonomous Recommendation:** I suggest allocating a 45-minute deep focus block tomorrow morning to clear remaining subtasks before cognitive drift increases. Shall I lock this into your schedule?";
+        } else if (lower.includes('reschedule') || lower.includes('evening') || lower.includes('tomorrow')) {
+          reply = "✅ **Autonomous Schedule Rebalancing Complete:**\n\nI have analyzed your temporal buffer and shifted your remaining evening subtasks to tomorrow's **10:00 AM – 11:30 AM Focus Block**.\n\n* **Workload Impact:** Freed up your evening for cognitive recovery and sleep hygiene.\n* **Velocity Status:** Your overall streak remains **SYNCHRONIZED**. You're set up for peak execution velocity tomorrow!";
+        } else if (lower.includes('email') || lower.includes('extension') || lower.includes('draft')) {
+          reply = "📧 **Drafted Emergency Extension Request:**\n\n**Subject:** Request for 48-Hour Deadline Extension — System Architecture & API Review\n\nDear Professor / Manager,\n\nI am writing to provide a status update on **our project deliverable**. We have completed significant core milestones, but to ensure enterprise-grade quality and thorough edge-case QA verification, I would respectfully request a brief 48-hour extension past our original deadline.\n\nThank you very much for your understanding and continued support.\n\nBest regards,\n**Krishna Agarwal** *(via SamayPe AI Guardian)*";
+        } else if (lower.includes('micro-action') || lower.includes('procrastinat') || lower.includes('stress') || lower.includes('overwhelm') || lower.includes('start')) {
+          reply = "⚡ **Cognitive Anti-Procrastination Intervention:**\n\nWhen facing temporal friction, the brain resists starting massive deliverables. Let's bypass dopamine resistance with a **5-Minute Micro-Sprint**:\n\n🎯 **Your Immediate Action Item:**\nOpen **\"System Architecture & API Review\"** on your dashboard and complete just **Step 1: Audit JWT token expiration and refresh logic**.\n\nDo not worry about finishing the entire deliverable right now—just set a timer for 5 minutes and knock out this single item. Momentum breeds velocity! Ready?";
         }
 
         const fallbackAiMsg: Message = {
@@ -106,7 +114,7 @@ export default function ChatPage() {
         };
         setMessages(prev => [...prev, fallbackAiMsg]);
         setLoading(false);
-      }, 1000);
+      }, 600);
       return;
     } finally {
       setLoading(false);
