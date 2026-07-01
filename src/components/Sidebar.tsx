@@ -142,6 +142,35 @@ export default function Sidebar() {
         </div>
       </aside>
 
+      {/* Mobile Top Header Bar with Profile & Logout */}
+      <div className="md:hidden fixed top-0 inset-x-0 glass-panel border-b border-gray-800 z-50 px-4 py-2.5 flex items-center justify-between shadow-lg">
+        <Link href="/" className="flex items-center space-x-2">
+          <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-purple-600 to-blue-500 flex items-center justify-center font-black text-white text-base shadow-[0_0_15px_rgba(157,78,221,0.5)]">
+            ⚡
+          </div>
+          <span className="font-extrabold text-white text-base tracking-tight">SamayPe<span className="text-purple-400">.AI</span></span>
+        </Link>
+
+        <div className="flex items-center space-x-2">
+          {authUser ? (
+            <div className="flex items-center space-x-2 bg-white/5 border border-white/10 rounded-xl pl-2.5 pr-1 py-1">
+              <span className="text-xs font-bold text-gray-200 max-w-[90px] truncate">{authUser.name}</span>
+              <button
+                onClick={handleLogout}
+                className="p-1.5 rounded-lg bg-red-500/15 hover:bg-red-500/30 text-red-400 transition-all cursor-pointer flex items-center justify-center"
+                title="Sign Out"
+              >
+                <LogOut className="w-4 h-4" />
+              </button>
+            </div>
+          ) : (
+            <Link href="/login" className="text-xs font-bold text-purple-400 bg-purple-950/40 border border-purple-500/30 px-3 py-1.5 rounded-xl">
+              Sign In
+            </Link>
+          )}
+        </div>
+      </div>
+
       {/* Mobile Bottom Navigation */}
       <div className="md:hidden fixed bottom-0 inset-x-0 glass-panel border-t border-gray-800 z-50 px-3 py-2 flex justify-around items-center">
         {navItems.slice(0, 5).map((item) => {
