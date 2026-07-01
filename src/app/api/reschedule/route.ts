@@ -11,7 +11,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Task ID required' }, { status: 400 });
     }
 
-    const tasks = getTasks();
+    const tasks = await getTasks();
     const task = tasks.find(t => t.id === taskId);
     if (!task) {
       return NextResponse.json({ error: 'Task not found' }, { status: 404 });
@@ -32,7 +32,7 @@ export async function POST(req: Request) {
     updatedTask.riskScore = risk.score;
     updatedTask.riskLevel = risk.level;
 
-    updateTask(updatedTask);
+    await updateTask(updatedTask);
 
     return NextResponse.json({ success: true, task: updatedTask });
   } catch (error: any) {

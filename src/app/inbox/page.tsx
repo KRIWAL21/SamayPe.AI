@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import TaskCard from '@/components/TaskCard';
 import AddTaskModal from '@/components/AddTaskModal';
 import VoiceGoalButton from '@/components/VoiceGoalButton';
+import AgenticThinkingModal from '@/components/AgenticThinkingModal';
 import ThemeToggle from '@/components/ThemeToggle';
 import { Task, Priority, RiskLevel } from '@/lib/types';
 import { Plus, Sparkles, CheckCircle2, AlertOctagon, TrendingUp, Zap, Search, Filter, Inbox as InboxIcon } from 'lucide-react';
@@ -17,6 +18,9 @@ export default function InboxPage() {
   const [activeTab, setActiveTab] = useState<'ALL' | 'ACTIVE' | 'HIGH_RISK' | 'COMPLETED'>('ALL');
   const [searchQuery, setSearchQuery] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
+  const [thinkingOpen, setThinkingOpen] = useState(false);
+  const [thinkingTitle, setThinkingTitle] = useState('Autonomous Cognitive Decomposition');
+  const [pendingAction, setPendingAction] = useState<(() => void) | null>(null);
 
   const fetchTasks = async () => {
     try {
@@ -34,8 +38,17 @@ export default function InboxPage() {
     fetchTasks();
   }, []);
 
-  const handleTaskCreated = () => {
-    fetchTasks();
+  const handleTaskCreated = (newTask?: any) => {
+    if (newTask && newTask.title) {
+      setThinkingTitle('Autonomous Goal Decomposition');
+      setPendingAction(() => () => {
+        setTasks(prev => [newTask, ...prev]);
+        fetchTasks();
+      });
+      setThinkingOpen(true);
+    } else {
+      fetchTasks();
+    }
   };
 
   const handleDeleteTask = async (taskId: string) => {
@@ -109,9 +122,31 @@ export default function InboxPage() {
     }
   };
 
-  const handleVoiceGoalCaptured = (text: string) => {
-    toast.success(`Voice goal captured: "${text}"`);
-    fetchTasks();
+  const handleVoiceGoalCaptured = async (transcript: string) => {
+    setThinkingTitle('Voice Goal Parsing & Decomposition');
+    setThinkingOpen(true);
+    setPendingAction(() => async () => {
+      try {
+        const res = await fetch('/api/decompose', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ title: transcript, description: 'Captured via Execution Inbox Voice HUD' })
+        });
+        const data = await res.json();
+        if (data.success && data.task) {
+          await fetch('/api/tasks', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data.task)
+          });
+          setTasks(prev => [data.task, ...prev]);
+          toast.success('Voice goal decomposed & persisted in MongoDB!');
+          fetchTasks();
+        }
+      } catch (e) {
+        toast.error('Failed to process voice goal.');
+      }
+    });
   };
 
   const dueTodayCount = tasks.filter(t => t.status !== 'COMPLETED').length;
@@ -245,6 +280,18 @@ export default function InboxPage() {
         isOpen={modalOpen} 
         onClose={() => setModalOpen(false)} 
         onTaskCreated={handleTaskCreated}
+      />
+
+      <AgenticThinkingModal
+        isOpen={thinkingOpen}
+        title={thinkingTitle}
+        onComplete={() => {
+          setThinkingOpen(false);
+          if (pendingAction) {
+            pendingAction();
+            setPendingAction(null);
+          }
+        }}
       />
     </div>
   );

@@ -29,7 +29,8 @@ const navSections = [
     title: 'SUPER AGENTS & CHANNELS',
     items: [
       { name: 'Community Hub', href: '/community', icon: Users },
-      { name: 'Agent Preferences', href: '/profile-setup', icon: UserCog },
+      { name: 'My Profile & Avatar', href: '/profile', icon: UserCog, badge: 'Edit' },
+      { name: 'Agent Preferences', href: '/profile-setup', icon: Sparkles },
     ]
   }
 ];
@@ -98,54 +99,42 @@ export default function Sidebar() {
             <div className="text-[10px] font-mono bg-white/10 px-1.5 py-0.5 rounded text-gray-400">⌘K</div>
           </div>
 
-          {/* Primary Action Button (+ Add Task / Goal - Todoist Style) */}
-          <Link href="/create-plan">
-            <motion.div
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-purple-600 via-blue-600 to-cyan-500 text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center space-x-2 shadow-lg shadow-purple-600/30 cursor-pointer"
-            >
-              <Sparkles className="w-4 h-4 animate-spin" style={{ animationDuration: '4s' }} />
-              <span>+ Create AI Commitment</span>
-            </motion.div>
-          </Link>
-
-          {/* Grouped Navigation Sections */}
-          <nav className="flex-1 space-y-6 overflow-y-auto pr-1 scrollbar-none">
-            {navSections.map((sec, sIdx) => (
-              <div key={sIdx} className="space-y-1.5">
-                <div className="text-[10px] font-mono font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500 px-3">
-                  {sec.title}
+          {/* Navigation Links */}
+          <nav className="flex-1 overflow-y-auto space-y-5 pr-1 no-scrollbar">
+            {navSections.map((section) => (
+              <div key={section.title} className="space-y-1">
+                <div className="px-2 text-[10px] font-mono font-bold tracking-wider text-gray-500">
+                  {section.title}
                 </div>
-                {sec.items.map((item) => {
-                  const isActive = pathname === item.href;
-                  const Icon = item.icon;
-                  return (
-                    <Link key={item.name} href={item.href}>
-                      <motion.div
-                        whileHover={{ x: 3 }}
-                        whileTap={{ scale: 0.98 }}
-                        className={`flex items-center justify-between px-3.5 py-2 rounded-xl transition-all font-semibold text-xs relative ${
-                          isActive 
-                            ? 'text-white bg-purple-600/25 border border-purple-500/40 shadow-sm shadow-purple-900/30' 
-                            : 'text-gray-400 hover:text-gray-200 hover:bg-white/5'
+                <div className="space-y-0.5">
+                  {section.items.map((item) => {
+                    const isActive = pathname === item.href;
+                    const Icon = item.icon;
+                    return (
+                      <Link
+                        key={item.name}
+                        href={item.href}
+                        className={`flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold transition-all ${
+                          isActive
+                            ? 'bg-purple-600/20 text-purple-300 border border-purple-500/30 shadow-sm'
+                            : 'text-gray-400 hover:text-white hover:bg-white/5'
                         }`}
                       >
-                        <div className="flex items-center space-x-2.5 truncate">
+                        <div className="flex items-center space-x-2.5">
                           <Icon className={`w-4 h-4 ${isActive ? 'text-purple-400' : 'text-gray-400'}`} />
-                          <span className="truncate">{item.name}</span>
+                          <span>{item.name}</span>
                         </div>
                         {item.badge && (
-                          <span className={`text-[9px] font-mono font-bold px-1.5 py-0.5 rounded ${
-                            isActive ? 'bg-purple-500 text-white' : 'bg-white/10 text-gray-400'
+                          <span className={`text-[9px] px-1.5 py-0.5 rounded font-mono ${
+                            isActive ? 'bg-purple-500/30 text-purple-200 font-bold' : 'bg-white/10 text-gray-400'
                           }`}>
                             {item.badge}
                           </span>
                         )}
-                      </motion.div>
-                    </Link>
-                  );
-                })}
+                      </Link>
+                    );
+                  })}
+                </div>
               </div>
             ))}
           </nav>
@@ -154,22 +143,26 @@ export default function Sidebar() {
           <div className="pt-4 border-t border-gray-800/80 space-y-3">
             <ThemeToggle />
             {authUser ? (
-              <div className="p-3 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-between">
-                <div className="flex items-center space-x-2.5 overflow-hidden">
-                  <div className="w-8 h-8 rounded-xl bg-purple-600/30 border border-purple-500/50 flex items-center justify-center text-sm flex-shrink-0 font-bold text-white">
-                    {authUser.avatar || authUser.name?.[0] || '⚡'}
+              <div className="p-3 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-between hover:border-purple-500/40 transition-all">
+                <Link href="/profile" className="flex items-center space-x-2.5 overflow-hidden flex-1 cursor-pointer group" title="Click to view & edit profile">
+                  <div className="w-8 h-8 rounded-xl bg-purple-600/30 border border-purple-500/50 flex items-center justify-center text-sm flex-shrink-0 font-bold text-white overflow-hidden group-hover:scale-105 transition-transform">
+                    {authUser.avatar && authUser.avatar.startsWith('http') ? (
+                      <img src={authUser.avatar} alt="Avatar" className="w-full h-full object-cover" />
+                    ) : (
+                      authUser.avatar || authUser.name?.[0] || '⚡'
+                    )}
                   </div>
-                  <div className="min-w-0">
-                    <div className="text-xs font-bold text-white truncate flex items-center space-x-1">
+                  <div className="min-w-0 flex-1">
+                    <div className="text-xs font-bold text-white truncate flex items-center space-x-1 group-hover:text-purple-300 transition-colors">
                       <span>{authUser.name}</span>
                       {authUser.isDemo && <Award className="w-3 h-3 text-yellow-400 flex-shrink-0 inline" />}
                     </div>
-                    <div className="text-[10px] text-purple-300 truncate">Vibe2Ship Finalist</div>
+                    <div className="text-[10px] text-purple-300 truncate">Click to Edit Profile</div>
                   </div>
-                </div>
+                </Link>
                 <button
                   onClick={handleLogout}
-                  className="p-1.5 rounded-lg bg-red-500/15 hover:bg-red-500/30 text-red-400 transition-colors flex-shrink-0 cursor-pointer"
+                  className="p-1.5 rounded-lg bg-red-500/15 hover:bg-red-500/30 text-red-400 transition-colors flex-shrink-0 cursor-pointer ml-1"
                   title="Sign Out"
                 >
                   <LogOut className="w-4 h-4" />
@@ -191,8 +184,17 @@ export default function Sidebar() {
 
         <div className="flex items-center space-x-2">
           {authUser ? (
-            <div className="flex items-center space-x-2 bg-white/5 border border-white/10 rounded-xl pl-2.5 pr-1 py-1">
-              <span className="text-xs font-bold text-gray-200 max-w-[80px] truncate">{authUser.name}</span>
+            <div className="flex items-center space-x-2 bg-white/5 border border-white/10 rounded-xl pl-2 pr-1 py-1">
+              <Link href="/profile" className="flex items-center space-x-1.5 cursor-pointer">
+                <div className="w-5 h-5 rounded-md bg-purple-600/30 flex items-center justify-center text-xs overflow-hidden">
+                  {authUser.avatar && authUser.avatar.startsWith('http') ? (
+                    <img src={authUser.avatar} alt="Avatar" className="w-full h-full object-cover" />
+                  ) : (
+                    authUser.avatar || '⚡'
+                  )}
+                </div>
+                <span className="text-xs font-bold text-gray-200 max-w-[80px] truncate hover:text-purple-300">{authUser.name}</span>
+              </Link>
               <button
                 onClick={handleLogout}
                 className="p-1 rounded-lg bg-red-500/15 hover:bg-red-500/30 text-red-400 transition-all cursor-pointer flex items-center justify-center"

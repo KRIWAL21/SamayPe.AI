@@ -51,7 +51,7 @@ export async function POST(req: Request) {
         subtasks
       };
 
-      addTask(newTask as any);
+      await addTask(newTask as any);
 
       const subtaskFormatted = subtasks.map((st, i) => `  ${i+1}. [ ] ${st.title} (~${st.estimatedMinutes}m)`).join('\n');
       replyText = isAudio
@@ -71,7 +71,7 @@ export async function POST(req: Request) {
     else if (renameMatch) {
       const idxNum = parseInt(renameMatch[1], 10);
       const newTitle = renameMatch[2].trim();
-      const tasks = getTasks();
+      const tasks = await getTasks();
       const activeTasks = tasks.filter(t => t.status !== 'COMPLETED');
 
       if (isNaN(idxNum) || idxNum < 1 || idxNum > activeTasks.length) {
@@ -81,7 +81,7 @@ export async function POST(req: Request) {
         const oldTitle = targetTask.title;
         targetTask.title = newTitle;
         targetTask.updatedAt = new Date().toISOString();
-        updateTask(targetTask);
+        await updateTask(targetTask);
 
         replyText = `✏️ *Task Renamed Successfully!*\n\nCommitment #${idxNum}:\nOld: _${oldTitle}_\nNew: *${newTitle}*\n\nSynced live to your dashboard! Reply 'menu' for options. 🚀`;
       }
@@ -89,14 +89,14 @@ export async function POST(req: Request) {
     // 3. DELETE COMMAND EXECUTION
     else if (deleteMatch) {
       const idxNum = parseInt(deleteMatch[1], 10);
-      const tasks = getTasks();
+      const tasks = await getTasks();
       const activeTasks = tasks.filter(t => t.status !== 'COMPLETED');
 
       if (isNaN(idxNum) || idxNum < 1 || idxNum > activeTasks.length) {
         replyText = `⚠️ *Invalid Task Number*\n\nPlease provide a valid number between 1 and ${activeTasks.length}.\nReply '2' or '4' to see the numbered task list!`;
       } else {
         const targetTask = activeTasks[idxNum - 1];
-        deleteTask(targetTask.id);
+        await deleteTask(targetTask.id);
 
         replyText = `🗑️ *Task Removed Successfully!*\n\nDeleted commitment: *${targetTask.title}*\n\nSynced live to your dashboard! Reply 'menu' for options. 🚀`;
       }
@@ -107,7 +107,7 @@ export async function POST(req: Request) {
     }
     // 5. OPTION 2: VIEW ALL TASKS / PLANNER
     else if (['2', 'list', 'planner', 'tasks', 'view'].includes(cleanLower)) {
-      const tasks = getTasks();
+      const tasks = await getTasks();
       const activeTasks = tasks.filter(t => t.status !== 'COMPLETED');
       if (activeTasks.length === 0) {
         replyText = `📋 *Your SamayPe AI Task Planner*\n\nYou currently have zero active commitments! 🎉\n\n👉 _Reply '1' to schedule a new task._`;
@@ -126,7 +126,7 @@ export async function POST(req: Request) {
     }
     // 6. OPTION 3: RENAME MENU PROMPT
     else if (['3', 'rename', 'edit'].includes(cleanLower)) {
-      const tasks = getTasks();
+      const tasks = await getTasks();
       const activeTasks = tasks.filter(t => t.status !== 'COMPLETED');
       if (activeTasks.length === 0) {
         replyText = `✏️ *Rename Task Title*\n\nYou have no active commitments to rename! Reply '1' to schedule a new task.`;
@@ -140,7 +140,7 @@ export async function POST(req: Request) {
     }
     // 7. OPTION 4: DELETE MENU PROMPT
     else if (['4', 'delete', 'remove'].includes(cleanLower)) {
-      const tasks = getTasks();
+      const tasks = await getTasks();
       const activeTasks = tasks.filter(t => t.status !== 'COMPLETED');
       if (activeTasks.length === 0) {
         replyText = `🗑️ *Delete Task*\n\nYou have no active commitments to remove! Reply '1' to schedule a new task.`;
@@ -154,7 +154,7 @@ export async function POST(req: Request) {
     }
     // 8. OPTION 5: CHECK HIGH-RISK DEADLINES
     else if (['5', 'risk', 'urgent', 'alerts', 'high risk'].includes(cleanLower)) {
-      const tasks = getTasks();
+      const tasks = await getTasks();
       const riskyTasks = tasks
         .filter(t => t.status !== 'COMPLETED')
         .map(t => ({ ...t, ...calculateRisk(t) }))
@@ -179,7 +179,7 @@ export async function POST(req: Request) {
     }
     // 10. OPTION 7: PRODUCTIVITY TELEMETRY
     else if (['7', 'stats', 'telemetry', 'insights', 'summary'].includes(cleanLower)) {
-      const tasks = getTasks();
+      const tasks = await getTasks();
       const completedTasks = tasks.filter(t => t.status === 'COMPLETED');
       const activeTasks = tasks.filter(t => t.status !== 'COMPLETED');
       const totalTasks = tasks.length;
@@ -214,7 +214,7 @@ export async function POST(req: Request) {
       fullTask.riskLevel = risk.level;
       fullTask.aiRecommendation = risk.recommendation;
 
-      addTask(fullTask);
+      await addTask(fullTask);
 
       const subtasksList = (fullTask.subtasks || [])
         .slice(0, 4)

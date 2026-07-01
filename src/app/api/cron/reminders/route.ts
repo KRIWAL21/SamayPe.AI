@@ -57,7 +57,7 @@ async function sendWhatsAppMessage(to: string, body: string): Promise<boolean> {
  */
 export async function GET() {
   try {
-    const tasks = getTasks();
+    const tasks = await getTasks();
     const now = new Date();
 
     // Recalculate risk for all active tasks

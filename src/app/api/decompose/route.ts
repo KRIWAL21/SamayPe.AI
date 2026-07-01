@@ -5,7 +5,7 @@ import { addTask } from '@/lib/storage';
 
 export async function POST(req: Request) {
   try {
-    const { userInput } = await req.json();
+    const { userInput, userId = 'demo-user' } = await req.json();
 
     if (!userInput) {
       return NextResponse.json({ error: 'User input is required' }, { status: 400 });
@@ -18,6 +18,7 @@ export async function POST(req: Request) {
     const fullTask = {
       ...decomposedTask,
       id: `task-${Date.now()}`,
+      userId,
       status: 'TODO',
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString()
@@ -28,8 +29,8 @@ export async function POST(req: Request) {
     fullTask.riskLevel = risk.level;
     fullTask.aiRecommendation = risk.recommendation;
 
-    // Permanently save to storage
-    addTask(fullTask);
+    // Permanently save to MongoDB storage
+    await addTask(fullTask);
 
     return NextResponse.json({ success: true, task: fullTask });
   } catch (error: any) {

@@ -15,16 +15,17 @@ import { Plus, Sparkles, Flame, CheckCircle2, AlertOctagon, TrendingUp, Calendar
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
 
-function getHeaderTitle(): string {
+function getHeaderTitle(userName?: string): string {
   const hour = new Date().getHours();
-  if (hour >= 5 && hour < 12) return 'Morning Execution Command';
-  if (hour >= 12 && hour < 17) return 'Peak Velocity Horizon';
-  if (hour >= 17 && hour < 21) return 'Evening Milestone Roadmap';
-  return 'Late Night Sprint Mode';
+  const name = userName || 'Creator';
+  if (hour >= 5 && hour < 12) return `Good morning, ${name} 🌅`;
+  if (hour >= 12 && hour < 17) return `Good afternoon, ${name} ☀️`;
+  return `Good evening, ${name} 🌙`;
 }
 
 export default function DashboardPage() {
   const router = useRouter();
+  const [userName, setUserName] = useState('');
   const [tasks, setTasks] = useState<Task[]>([]);
   const [activeTab, setActiveTab] = useState<'ALL' | 'ACTIVE' | 'HIGH_RISK' | 'COMPLETED'>('ALL');
   const [searchQuery, setSearchQuery] = useState('');
@@ -46,18 +47,29 @@ export default function DashboardPage() {
   };
 
   useEffect(() => {
-    const user = localStorage.getItem('samaype_auth_user');
-    if (!user) {
-      router.push('/login');
-      return;
-    }
+    const checkUser = () => {
+      const user = localStorage.getItem('samaype_auth_user');
+      if (!user) {
+        router.push('/login');
+        return;
+      }
+      try {
+        const parsed = JSON.parse(user);
+        setUserName(parsed.name || parsed.email?.split('@')[0] || 'Creator');
+      } catch (e) {}
+    };
+
+    checkUser();
     fetchTasks();
     const interval = setInterval(fetchTasks, 5000);
     const handleUpdate = () => fetchTasks();
+    const handleStorage = () => checkUser();
     window.addEventListener('tasksUpdated', handleUpdate);
+    window.addEventListener('storage', handleStorage);
     return () => {
       clearInterval(interval);
       window.removeEventListener('tasksUpdated', handleUpdate);
+      window.removeEventListener('storage', handleStorage);
     };
   }, [router]);
 
@@ -278,7 +290,7 @@ export default function DashboardPage() {
             <span>AI SUPER AGENT // DEADLINE GUARDIAN</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white flex items-center space-x-2">
-            <span>{getHeaderTitle()}</span>
+            <span>{getHeaderTitle(userName)}</span>
           </h1>
         </div>
 

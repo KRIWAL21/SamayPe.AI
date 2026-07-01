@@ -1,9 +1,6 @@
-import fs from 'fs';
-import path from 'path';
+import { connectDB } from './db';
+import { TaskModel } from './models/Task';
 import { Task, Priority, RiskLevel } from './types';
-
-const DATA_DIR = path.join(process.cwd(), '.data');
-const TASKS_FILE = path.join(DATA_DIR, 'tasks.json');
 
 const defaultTasks: Task[] = [
   {
@@ -142,55 +139,62 @@ const defaultTasks: Task[] = [
   }
 ];
 
-export function getTasks(): Task[] {
+export async function getTasks(userId?: string): Promise<Task[]> {
+  await connectDB();
   try {
-    if (!fs.existsSync(DATA_DIR)) {
-      fs.mkdirSync(DATA_DIR, { recursive: true });
+    const count = await TaskModel.countDocuments();
+    if (count === 0) {
+      await TaskModel.insertMany(defaultTasks);
     }
-    if (!fs.existsSync(TASKS_FILE)) {
-      fs.writeFileSync(TASKS_FILE, JSON.stringify(defaultTasks, null, 2), 'utf-8');
-      return defaultTasks;
-    }
-    const data = fs.readFileSync(TASKS_FILE, 'utf-8');
-    const parsed = JSON.parse(data);
-    if (Array.isArray(parsed) && (parsed.some((t: Task) => t.title?.includes('Vibe2Ship AI Hackathon Solution')) || !parsed.some((t: Task) => t.title?.includes('Revise LangChain Notes')))) {
-      fs.writeFileSync(TASKS_FILE, JSON.stringify(defaultTasks, null, 2), 'utf-8');
-      return defaultTasks;
-    }
-    return parsed;
+    const query = userId ? { $or: [{ userId }, { userId: 'demo-user' }] } : {};
+    const tasks = await TaskModel.find(query).sort({ createdAt: -1 }).lean();
+    return tasks.map((t: any) => ({
+      ...t,
+      _id: undefined,
+      __v: undefined
+    }));
   } catch (err) {
-    console.error('Storage getTasks error:', err);
+    console.error('MongoDB getTasks error:', err);
     return defaultTasks;
   }
 }
 
-export function saveTasks(tasks: Task[]): void {
+export async function saveTasks(tasks: Task[]): Promise<void> {
+  await connectDB();
   try {
-    if (!fs.existsSync(DATA_DIR)) {
-      fs.mkdirSync(DATA_DIR, { recursive: true });
+    for (const task of tasks) {
+      await TaskModel.findOneAndUpdate({ id: task.id }, task, { upsert: true, new: true });
     }
-    fs.writeFileSync(TASKS_FILE, JSON.stringify(tasks, null, 2), 'utf-8');
   } catch (err) {
-    console.error('Storage saveTasks error:', err);
+    console.error('MongoDB saveTasks error:', err);
   }
 }
 
-export function addTask(task: Task): Task {
-  const tasks = getTasks();
-  tasks.unshift(task);
-  saveTasks(tasks);
+export async function addTask(task: Task): Promise<Task> {
+  await connectDB();
+  try {
+    await TaskModel.create(task);
+  } catch (err) {
+    console.error('MongoDB addTask error:', err);
+  }
   return task;
 }
 
-export function updateTask(updated: Task): Task {
-  let tasks = getTasks();
-  tasks = tasks.map(t => t.id === updated.id ? updated : t);
-  saveTasks(tasks);
+export async function updateTask(updated: Task): Promise<Task> {
+  await connectDB();
+  try {
+    await TaskModel.findOneAndUpdate({ id: updated.id }, updated, { new: true });
+  } catch (err) {
+    console.error('MongoDB updateTask error:', err);
+  }
   return updated;
 }
 
-export function deleteTask(id: string): void {
-  let tasks = getTasks();
-  tasks = tasks.filter(t => t.id !== id);
-  saveTasks(tasks);
+export async function deleteTask(id: string): Promise<void> {
+  await connectDB();
+  try {
+    await TaskModel.deleteOne({ id });
+  } catch (err) {
+    console.error('MongoDB deleteTask error:', err);
+  }
 }

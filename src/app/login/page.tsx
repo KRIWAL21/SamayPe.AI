@@ -12,49 +12,82 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleJudgeDemoLogin = () => {
+  const handleJudgeDemoLogin = async () => {
     setLoading(true);
-    const toastId = toast.loading('Initializing Vibe2Ship Master Evaluator Session...');
+    const toastId = toast.loading('Connecting to MongoDB Cloud & Initializing Evaluator Session...');
 
-    setTimeout(() => {
+    try {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: 'pro@samaype.ai',
+          name: 'SamayPe.AI Pro',
+          isDemo: true
+        })
+      });
+      const data = await res.json();
+
       if (typeof window !== 'undefined') {
         localStorage.setItem('samaype_auth_user', JSON.stringify({
+          id: data.user?.id || 'demo-user',
           email: 'pro@samaype.ai',
           name: 'SamayPe.AI Pro',
           role: 'Master Guardian',
           avatar: '⚡',
-          isDemo: true
+          isDemo: true,
+          ...data.user
         }));
       }
-      toast.success('Welcome to SamayPe.AI! Full Telemetry & AI Suite Loaded.', { id: toastId });
-      setLoading(false);
+      toast.success('Connected to MongoDB! Full Telemetry & AI Suite Loaded.', { id: toastId });
       router.push('/');
-    }, 800);
+    } catch (err) {
+      toast.error('Login failed. Please try again.', { id: toastId });
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleCustomLogin = (e: React.FormEvent) => {
+  const handleCustomLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) {
       toast.error('Please enter an email address');
       return;
     }
     setLoading(true);
-    const toastId = toast.loading('Authenticating identity...');
+    const toastId = toast.loading('Authenticating identity against MongoDB Cloud...');
 
-    setTimeout(() => {
+    try {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: email,
+          password: password,
+          name: email.split('@')[0] || 'Creator',
+          isDemo: false
+        })
+      });
+      const data = await res.json();
+
       if (typeof window !== 'undefined') {
         localStorage.setItem('samaype_auth_user', JSON.stringify({
+          id: data.user?.id || `user-${Date.now()}`,
           email: email,
-          name: email.split('@')[0] || 'Creator',
+          name: data.user?.name || email.split('@')[0] || 'Creator',
           role: 'Pro Creator',
           avatar: '⚡',
-          isDemo: false
+          isDemo: false,
+          ...data.user
         }));
       }
-      toast.success(`Welcome back, ${email}!`, { id: toastId });
-      setLoading(false);
+      toast.success(`Connected to MongoDB! Welcome back, ${email}!`, { id: toastId });
       router.push('/');
-    }, 700);
+    } catch (err) {
+      toast.error('Authentication failed. Please try again.', { id: toastId });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
