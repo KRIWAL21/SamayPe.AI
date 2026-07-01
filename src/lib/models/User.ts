@@ -9,6 +9,7 @@ export interface IUser extends Document {
   archetype?: string;
   cognitiveWindow?: string;
   whatsappNumber?: string;
+  phoneNumber?: string;
   createdAt: string;
 }
 
@@ -21,6 +22,7 @@ const UserSchema: Schema = new Schema({
   archetype: { type: String, default: 'Hackathon Warrior' },
   cognitiveWindow: { type: String, default: 'Night Owl' },
   whatsappNumber: { type: String, default: '+14155238886' },
+  phoneNumber: { type: String, default: () => `+1-${Date.now()}-${Math.floor(Math.random() * 999999)}` },
   createdAt: { type: String, default: () => new Date().toISOString() }
 });
 

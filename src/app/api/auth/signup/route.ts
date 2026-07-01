@@ -35,7 +35,8 @@ export async function POST(req: Request) {
       isDemo: false,
       archetype: archetype || 'Hackathon Warrior',
       cognitiveWindow: cognitiveWindow || 'Night Owl',
-      whatsappNumber: whatsappNumber || '+14155238886'
+      whatsappNumber: whatsappNumber || '+14155238886',
+      phoneNumber: `+1-${Date.now()}-${Math.floor(Math.random() * 999999)}`
     });
 
     return NextResponse.json({
