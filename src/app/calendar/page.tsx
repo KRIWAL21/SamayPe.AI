@@ -28,7 +28,17 @@ export default function CalendarPage() {
 
   const fetchTasks = async () => {
     try {
-      const res = await fetch('/api/tasks');
+      let userId = 'demo-user';
+      if (typeof window !== 'undefined') {
+        const uStr = localStorage.getItem('samaype_auth_user');
+        if (uStr) {
+          try {
+            const u = JSON.parse(uStr);
+            if (u?.id) userId = u.id;
+          } catch (e) {}
+        }
+      }
+      const res = await fetch(`/api/tasks?userId=${encodeURIComponent(userId)}`);
       const data = await res.json();
       if (data.success && data.tasks) {
         setTasks(data.tasks);
@@ -85,9 +95,20 @@ export default function CalendarPage() {
     const [hours, mins] = newTime.split(':').map(Number);
     const targetDate = new Date(year, month - 1, day, hours, mins);
 
+    let currentUserId = 'demo-user';
+    if (typeof window !== 'undefined') {
+      const uStr = localStorage.getItem('samaype_auth_user');
+      if (uStr) {
+        try {
+          const u = JSON.parse(uStr);
+          if (u?.id) currentUserId = u.id;
+        } catch (e) {}
+      }
+    }
+
     const newTaskPayload = {
       id: `task-cal-${Date.now()}`,
-      userId: 'hackathon-user',
+      userId: currentUserId,
       title: newTitle,
       description: `Scheduled via Upcoming Calendar View for ${targetDate.toLocaleDateString()}`,
       deadline: targetDate.toISOString(),

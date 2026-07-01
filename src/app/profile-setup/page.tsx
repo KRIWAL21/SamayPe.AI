@@ -38,10 +38,21 @@ export default function ProfileSetupPage() {
           whatsappNumber
         }));
       }
+      let currentUserId = 'demo-user';
+      if (typeof window !== 'undefined') {
+        const uStr = localStorage.getItem('samaype_auth_user');
+        if (uStr) {
+          try {
+            const u = JSON.parse(uStr);
+            if (u?.id) currentUserId = u.id;
+          } catch (e) {}
+        }
+      }
       await fetch('/api/tasks', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          userId: currentUserId,
           title: `👤 Cognitive Profile Tuned: ${selectedArchetype.toUpperCase()}`,
           description: `Prime working window set to ${selectedWindow}. Connected WhatsApp notifications for ${whatsappNumber}.`,
           category: 'AI Configuration',

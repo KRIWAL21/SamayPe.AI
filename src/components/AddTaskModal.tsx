@@ -23,11 +23,22 @@ export default function AddTaskModal({ isOpen, onClose, onTaskCreated }: AddTask
     setLoading(true);
     const toastId = toast.loading('⚡ Gemini is autonomously decomposing your goal...');
 
+    let currentUserId = 'demo-user';
+    if (typeof window !== 'undefined') {
+      const authStr = localStorage.getItem('samaype_auth_user');
+      if (authStr) {
+        try {
+          const u = JSON.parse(authStr);
+          if (u?.id) currentUserId = u.id;
+        } catch (e) {}
+      }
+    }
+
     try {
       const res = await fetch('/api/decompose', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userInput }),
+        body: JSON.stringify({ userInput, userId: currentUserId }),
       });
 
       const data = await res.json();
@@ -47,7 +58,7 @@ export default function AddTaskModal({ isOpen, onClose, onTaskCreated }: AddTask
       
       const fallbackTask = {
         id: `task-${Date.now()}`,
-        userId: 'hackathon-judge',
+        userId: currentUserId,
         title: userInput.slice(0, 45),
         description: userInput,
         deadline: new Date(Date.now() + 86400000 * 2).toISOString(),

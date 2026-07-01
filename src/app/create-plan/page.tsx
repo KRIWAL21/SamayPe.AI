@@ -70,11 +70,22 @@ export default function CreatePlanPage() {
 
   const handlePublishPlan = async () => {
     const toastId = toast.loading('Syncing roadmap to Google Calendar & persistent storage...');
+    let currentUserId = 'demo-user';
+    if (typeof window !== 'undefined') {
+      const uStr = localStorage.getItem('samaype_auth_user');
+      if (uStr) {
+        try {
+          const u = JSON.parse(uStr);
+          if (u?.id) currentUserId = u.id;
+        } catch (e) {}
+      }
+    }
     try {
       await fetch('/api/tasks', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          userId: currentUserId,
           title: '🗓️ Master 7-Day Sprint Roadmap Execution',
           description: `Active commitments: ${selectedCategories.join(', ')}. Execution intensity: ${intensity}.`,
           category: 'Sprint Roadmap',

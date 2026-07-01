@@ -36,7 +36,17 @@ export default function ChatPage() {
   const [tasks, setTasks] = useState<any[]>([]);
 
   React.useEffect(() => {
-    fetch('/api/tasks')
+    let userId = 'demo-user';
+    if (typeof window !== 'undefined') {
+      const uStr = localStorage.getItem('samaype_auth_user');
+      if (uStr) {
+        try {
+          const u = JSON.parse(uStr);
+          if (u?.id) userId = u.id;
+        } catch (e) {}
+      }
+    }
+    fetch(`/api/tasks?userId=${encodeURIComponent(userId)}`)
       .then(res => res.json())
       .then(data => {
         if (data.success && data.tasks) {

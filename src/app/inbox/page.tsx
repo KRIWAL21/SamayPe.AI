@@ -24,7 +24,17 @@ export default function InboxPage() {
 
   const fetchTasks = async () => {
     try {
-      const res = await fetch('/api/tasks');
+      let userId = 'demo-user';
+      if (typeof window !== 'undefined') {
+        const uStr = localStorage.getItem('samaype_auth_user');
+        if (uStr) {
+          try {
+            const u = JSON.parse(uStr);
+            if (u?.id) userId = u.id;
+          } catch (e) {}
+        }
+      }
+      const res = await fetch(`/api/tasks?userId=${encodeURIComponent(userId)}`);
       const data = await res.json();
       if (data.success && data.tasks) {
         setTasks(data.tasks);
@@ -127,10 +137,20 @@ export default function InboxPage() {
     setThinkingOpen(true);
     setPendingAction(() => async () => {
       try {
+        let currentUserId = 'demo-user';
+        if (typeof window !== 'undefined') {
+          const authStr = localStorage.getItem('samaype_auth_user');
+          if (authStr) {
+            try {
+              const u = JSON.parse(authStr);
+              if (u?.id) currentUserId = u.id;
+            } catch (e) {}
+          }
+        }
         const res = await fetch('/api/decompose', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ title: transcript, description: 'Captured via Execution Inbox Voice HUD' })
+          body: JSON.stringify({ userInput: transcript, userId: currentUserId })
         });
         const data = await res.json();
         if (data.success && data.task) {

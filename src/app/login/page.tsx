@@ -2,12 +2,14 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Zap, Mail, Lock, Sparkles, Award, ArrowRight, ShieldCheck } from 'lucide-react';
+import { Zap, Mail, Lock, Sparkles, Award, ArrowRight, ShieldCheck, User as UserIcon } from 'lucide-react';
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
 
 export default function LoginPage() {
   const router = useRouter();
+  const [isSignUp, setIsSignUp] = useState(false);
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -38,6 +40,7 @@ export default function LoginPage() {
           isDemo: true,
           ...data.user
         }));
+        window.dispatchEvent(new Event('storage'));
       }
       toast.success('Connected to MongoDB! Full Telemetry & AI Suite Loaded.', { id: toastId });
       router.push('/');
@@ -48,43 +51,55 @@ export default function LoginPage() {
     }
   };
 
-  const handleCustomLogin = async (e: React.FormEvent) => {
+  const handleAuthSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email) {
-      toast.error('Please enter an email address');
+    if (!email || !password) {
+      toast.error('Please enter both email and password');
       return;
     }
+    if (isSignUp && !name.trim()) {
+      toast.error('Please enter your full name');
+      return;
+    }
+
     setLoading(true);
-    const toastId = toast.loading('Authenticating identity against MongoDB Cloud...');
+    const endpoint = isSignUp ? '/api/auth/signup' : '/api/auth/login';
+    const toastId = toast.loading(isSignUp ? 'Creating hashed credentials in MongoDB Cloud...' : 'Authenticating credentials against MongoDB Cloud...');
 
     try {
-      const res = await fetch('/api/auth/login', {
+      const res = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          email: email,
+          email: email.trim(),
           password: password,
-          name: email.split('@')[0] || 'Creator',
+          name: name.trim() || email.split('@')[0],
           isDemo: false
         })
       });
       const data = await res.json();
 
+      if (!res.ok || !data.success) {
+        throw new Error(data.error || 'Authentication failed');
+      }
+
       if (typeof window !== 'undefined') {
         localStorage.setItem('samaype_auth_user', JSON.stringify({
           id: data.user?.id || `user-${Date.now()}`,
-          email: email,
-          name: data.user?.name || email.split('@')[0] || 'Creator',
+          email: data.user?.email || email,
+          name: data.user?.name || name || email.split('@')[0],
           role: 'Pro Creator',
           avatar: '⚡',
           isDemo: false,
           ...data.user
         }));
+        window.dispatchEvent(new Event('storage'));
       }
-      toast.success(`Connected to MongoDB! Welcome back, ${email}!`, { id: toastId });
-      router.push('/');
-    } catch (err) {
-      toast.error('Authentication failed. Please try again.', { id: toastId });
+
+      toast.success(isSignUp ? 'Account created & synced to MongoDB Cloud!' : `Welcome back, ${data.user?.name || email}!`, { id: toastId });
+      router.push(isSignUp ? '/profile-setup' : '/');
+    } catch (err: any) {
+      toast.error(err.message || 'Authentication failed. Please try again.', { id: toastId });
     } finally {
       setLoading(false);
     }
@@ -149,24 +164,44 @@ export default function LoginPage() {
           </div>
         </div>
 
-        {/* RIGHT PANEL: Custom User Sign In (5 Columns) */}
+        {/* RIGHT PANEL: Custom User Sign In / Sign Up (5 Columns) */}
         <div className="md:col-span-5 p-6 sm:p-8 flex flex-col justify-center relative z-10 bg-black/30">
           <div className="mb-5">
-            <h2 className="text-sm font-bold uppercase tracking-wider text-gray-300">Standard Sign In</h2>
-            <p className="text-xs text-gray-500 mt-0.5">Enter your creator workspace credentials</p>
+            <h2 className="text-sm font-bold uppercase tracking-wider text-gray-300">
+              {isSignUp ? 'Create New Account' : 'Standard Sign In'}
+            </h2>
+            <p className="text-xs text-gray-500 mt-0.5">
+              {isSignUp ? 'Save your hashed credentials to MongoDB Cloud' : 'Enter your creator workspace credentials'}
+            </p>
           </div>
 
-          <form onSubmit={handleCustomLogin} className="space-y-4">
+          <form onSubmit={handleAuthSubmit} className="space-y-3.5">
+            {isSignUp && (
+              <div>
+                <label className="block text-[11px] font-semibold uppercase tracking-wider text-gray-400 mb-1">Full Name</label>
+                <div className="relative">
+                  <UserIcon className="w-4 h-4 text-gray-500 absolute left-3 top-3" />
+                  <input
+                    type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder="Arjun Mehta"
+                    className="w-full bg-black/50 border border-white/10 rounded-xl py-2 pl-9 pr-3 text-white placeholder-gray-600 text-xs focus:border-purple-500 focus:outline-none transition-all"
+                  />
+                </div>
+              </div>
+            )}
+
             <div>
               <label className="block text-[11px] font-semibold uppercase tracking-wider text-gray-400 mb-1">Email Address</label>
               <div className="relative">
-                <Mail className="w-4 h-4 text-gray-500 absolute left-3 top-3.5" />
+                <Mail className="w-4 h-4 text-gray-500 absolute left-3 top-3" />
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="creator@samaype.ai"
-                  className="w-full bg-black/50 border border-white/10 rounded-xl py-2.5 pl-9 pr-3 text-white placeholder-gray-600 text-xs focus:border-purple-500 focus:outline-none transition-all"
+                  className="w-full bg-black/50 border border-white/10 rounded-xl py-2 pl-9 pr-3 text-white placeholder-gray-600 text-xs focus:border-purple-500 focus:outline-none transition-all"
                 />
               </div>
             </div>
@@ -174,13 +209,13 @@ export default function LoginPage() {
             <div>
               <label className="block text-[11px] font-semibold uppercase tracking-wider text-gray-400 mb-1">Password</label>
               <div className="relative">
-                <Lock className="w-4 h-4 text-gray-500 absolute left-3 top-3.5" />
+                <Lock className="w-4 h-4 text-gray-500 absolute left-3 top-3" />
                 <input
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••••••"
-                  className="w-full bg-black/50 border border-white/10 rounded-xl py-2.5 pl-9 pr-3 text-white placeholder-gray-600 text-xs focus:border-purple-500 focus:outline-none transition-all"
+                  className="w-full bg-black/50 border border-white/10 rounded-xl py-2 pl-9 pr-3 text-white placeholder-gray-600 text-xs focus:border-purple-500 focus:outline-none transition-all"
                 />
               </div>
             </div>
@@ -190,13 +225,23 @@ export default function LoginPage() {
               disabled={loading}
               className="w-full flex items-center justify-center space-x-2 bg-white/10 hover:bg-white/15 text-white font-semibold py-2.5 px-4 rounded-xl transition-all cursor-pointer disabled:opacity-50 border border-white/10 text-xs mt-2"
             >
-              <span>Sign In to Dashboard</span>
+              <span>{isSignUp ? 'Sign Up & Save to DB' : 'Sign In to Dashboard'}</span>
             </button>
           </form>
 
-          <div className="mt-6 pt-4 border-t border-white/5 flex items-center justify-center space-x-1.5 text-[10px] text-gray-500">
+          <div className="mt-4 text-center">
+            <button
+              type="button"
+              onClick={() => setIsSignUp(!isSignUp)}
+              className="text-[11px] text-purple-400 hover:text-purple-300 transition-colors cursor-pointer font-medium"
+            >
+              {isSignUp ? 'Already have an account? Sign In' : "Don't have an account? Sign Up"}
+            </button>
+          </div>
+
+          <div className="mt-5 pt-4 border-t border-white/5 flex items-center justify-center space-x-1.5 text-[10px] text-gray-500">
             <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-            <span>Protected by SamayPe AI Identity Guard</span>
+            <span>Protected by SHA-256 Hashing & MongoDB Cloud</span>
           </div>
         </div>
       </motion.div>

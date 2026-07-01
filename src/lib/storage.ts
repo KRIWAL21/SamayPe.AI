@@ -142,12 +142,39 @@ const defaultTasks: Task[] = [
 export async function getTasks(userId?: string): Promise<Task[]> {
   await connectDB();
   try {
-    const count = await TaskModel.countDocuments();
-    if (count === 0) {
-      await TaskModel.insertMany(defaultTasks);
+    const targetUserId = userId || 'demo-user';
+    let tasks = await TaskModel.find({ userId: targetUserId }).sort({ createdAt: -1 }).lean();
+
+    if (tasks.length === 0 && targetUserId === 'demo-user') {
+      const count = await TaskModel.countDocuments();
+      if (count === 0) {
+        await TaskModel.insertMany(defaultTasks);
+      }
+      tasks = await TaskModel.find({ userId: 'demo-user' }).sort({ createdAt: -1 }).lean();
+    } else if (tasks.length === 0 && targetUserId !== 'demo-user') {
+      const welcomeTask: Task = {
+        id: `task-welcome-${Date.now()}`,
+        userId: targetUserId,
+        title: 'Welcome to SamayPe.AI — Your Autonomous Goal Hub',
+        description: 'Explore the Execution Inbox, click AI Auto-Fix on critical deadlines, or chat with the AI Coach.',
+        deadline: new Date(Date.now() + 1000 * 60 * 60 * 48).toISOString(),
+        priority: Priority.HIGH,
+        status: 'TODO' as any,
+        category: 'Onboarding',
+        riskScore: 0.2,
+        riskLevel: RiskLevel.LOW,
+        aiRecommendation: '✨ Welcome! Try clicking decompose or adding subtasks to see real-time AI synchronization.',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        subtasks: [
+          { id: 'sub-1', title: 'Connect WhatsApp Companion by texting join samaype-ai', estimatedMinutes: 5, completed: false },
+          { id: 'sub-2', title: 'Try Voice Goal input in the Execution Inbox', estimatedMinutes: 10, completed: false }
+        ]
+      };
+      await TaskModel.create(welcomeTask);
+      tasks = [welcomeTask as any];
     }
-    const query = userId ? { $or: [{ userId }, { userId: 'demo-user' }] } : {};
-    const tasks = await TaskModel.find(query).sort({ createdAt: -1 }).lean();
+
     return tasks.map((t: any) => ({
       ...t,
       _id: undefined,
