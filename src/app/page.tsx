@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import TaskCard from '@/components/TaskCard';
 import AddTaskModal from '@/components/AddTaskModal';
 import WhatsAppWidget from '@/components/WhatsAppWidget';
@@ -327,77 +328,43 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {/* ClickUp Style Filter & Search Bar */}
-      <div className="glass-panel p-3.5 rounded-2xl border border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-        {/* Left: View Filters */}
-        <div className="flex items-center space-x-1.5 overflow-x-auto pb-1 sm:pb-0 scrollbar-none">
-          {[
-            { id: 'ALL', label: 'All Tasks', count: tasks.length },
-            { id: 'ACTIVE', label: 'Active', count: dueTodayCount },
-            { id: 'HIGH_RISK', label: 'At Risk', count: criticalCount },
-            { id: 'COMPLETED', label: 'Done', count: completedTasks.length },
-          ].map(tab => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id as any)}
-              className={`px-3 py-1.5 rounded-xl text-xs font-bold font-mono transition-all flex items-center space-x-1.5 cursor-pointer whitespace-nowrap ${
-                activeTab === tab.id 
-                  ? 'bg-purple-600 text-white shadow-md shadow-purple-600/30' 
-                  : 'bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white'
-              }`}
-            >
-              <span>{tab.label}</span>
-              <span className={`px-1.5 py-0.5 rounded text-[10px] ${activeTab === tab.id ? 'bg-white/20 text-white' : 'bg-white/10 text-gray-400'}`}>
-                {tab.count}
-              </span>
-            </button>
-          ))}
-        </div>
-
-        {/* Right: Search Input */}
-        <div className="relative w-full sm:w-64">
-          <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-          <input
-            type="text"
-            placeholder="Search commitments..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-black/60 border border-white/10 focus:border-purple-500 rounded-xl pl-9 pr-3 py-1.5 text-xs text-white placeholder-gray-500 focus:outline-none transition-all"
-          />
-        </div>
-      </div>
-
-      {/* Todoist Style Section Header */}
-      <div>
-        <div className="flex items-center justify-between mb-4 pb-2 border-b border-white/10">
+      {/* Executive Action Summary (Inbox is separate at /inbox) */}
+      <div className="space-y-4">
+        <div className="flex items-center justify-between pb-2 border-b border-white/10">
           <div className="flex items-center space-x-2.5">
             <div className="w-2 h-5 bg-gradient-to-b from-purple-500 to-cyan-400 rounded-full" />
             <h2 className="text-sm font-extrabold text-white uppercase tracking-wider font-mono">
-              {activeTab === 'ALL' && 'All Active Commitments'}
-              {activeTab === 'ACTIVE' && 'Active Execution Queue'}
-              {activeTab === 'HIGH_RISK' && 'High Risk Drift Alerts'}
-              {activeTab === 'COMPLETED' && 'Archived & Completed Milestones'}
+              Immediate Execution Priority
             </h2>
-            <span className="text-[10px] font-mono bg-white/5 px-2 py-0.5 rounded border border-white/10 text-gray-400">
-              {filteredTasks.length} ITEMS
+            <span className="text-[10px] font-mono bg-purple-500/20 text-purple-300 px-2 py-0.5 rounded border border-purple-500/30">
+              TOP FOCUS
             </span>
           </div>
+
+          <Link href="/inbox">
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className="px-3.5 py-1.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/10 text-white font-bold text-xs flex items-center space-x-1.5 transition-all cursor-pointer"
+            >
+              <span>View Full Execution Inbox ({tasks.length}) →</span>
+            </motion.button>
+          </Link>
         </div>
 
-        {/* Task List Rendering */}
-        {filteredTasks.length === 0 ? (
-          <div className="glass-card p-12 rounded-2xl text-center space-y-3 border border-dashed border-white/15">
+        {tasks.filter(t => t.status !== 'COMPLETED').slice(0, 3).length === 0 ? (
+          <div className="glass-card p-10 rounded-2xl text-center space-y-3 border border-dashed border-white/15">
             <div className="w-12 h-12 rounded-2xl bg-purple-600/20 text-purple-400 flex items-center justify-center mx-auto text-xl">
-              ✨
+              ⚡
             </div>
-            <h3 className="text-base font-bold text-white">No commitments found in this view</h3>
+            <h3 className="text-base font-bold text-white">All Active Priorities Cleared!</h3>
             <p className="text-xs text-gray-400 max-w-sm mx-auto">
-              {searchQuery ? `No tasks matched "${searchQuery}". Try a different filter or search keyword.` : "You have cleared all tasks in this category! Use '+ New Commitment' to decompose your next goal."}
+              Your execution queue is clean. Check the Execution Inbox or decompose a new objective.
             </p>
           </div>
         ) : (
           <div className="space-y-3.5">
-            {filteredTasks.map((task) => (
+            {tasks.filter(t => t.status !== 'COMPLETED').slice(0, 3).map((task) => (
               <TaskCard 
                 key={task.id} 
                 task={task} 

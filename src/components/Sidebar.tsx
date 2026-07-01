@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { LayoutDashboard, MessageSquare, CalendarDays, Flame, BarChart3, Zap, Sparkles, Users, UserCog, ShieldCheck, LogOut, Award } from 'lucide-react';
+import { LayoutDashboard, MessageSquare, CalendarDays, Flame, BarChart3, Zap, Sparkles, Users, UserCog, ShieldCheck, LogOut, Award, Inbox } from 'lucide-react';
 import { motion } from 'framer-motion';
 import ThemeToggle from '@/components/ThemeToggle';
 
@@ -11,7 +11,8 @@ const navSections = [
   {
     title: 'MY WORKSPACE',
     items: [
-      { name: 'Dashboard & Inbox', href: '/', icon: LayoutDashboard, badge: 'Active' },
+      { name: 'Dashboard Overview', href: '/', icon: LayoutDashboard, badge: 'Live' },
+      { name: 'Execution Inbox', href: '/inbox', icon: Inbox, badge: 'Tasks' },
       { name: 'AI Coach (Super Agent)', href: '/chat', icon: MessageSquare, badge: 'AI 2.5' },
       { name: 'Goal Decomposer', href: '/create-plan', icon: Sparkles },
     ]
@@ -86,7 +87,7 @@ export default function Sidebar() {
               </div>
               <div className="min-w-0">
                 <div className="text-xs font-extrabold text-white truncate flex items-center space-x-1.5">
-                  <span>{authUser?.name ? `${authUser.name.split(' ')[0]}'s Workspace` : "Creator Workspace"}</span>
+                  <span>SamayPe.AI Workspace</span>
                 </div>
                 <div className="text-[10px] font-mono text-purple-300 flex items-center space-x-1">
                   <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />

@@ -19,14 +19,14 @@ export default function LoginPage() {
     setTimeout(() => {
       if (typeof window !== 'undefined') {
         localStorage.setItem('samaype_auth_user', JSON.stringify({
-          email: 'judge@vibe2ship.ai',
-          name: 'Hackathon Evaluator',
-          role: 'Master Judge',
-          avatar: '🏆',
+          email: 'pro@samaype.ai',
+          name: 'SamayPe.AI Pro',
+          role: 'Master Guardian',
+          avatar: '⚡',
           isDemo: true
         }));
       }
-      toast.success('Welcome Judge! Full Telemetry & Test Suite Loaded.', { id: toastId });
+      toast.success('Welcome to SamayPe.AI! Full Telemetry & AI Suite Loaded.', { id: toastId });
       setLoading(false);
       router.push('/');
     }, 800);
@@ -86,19 +86,19 @@ export default function LoginPage() {
               <div className="flex items-center justify-between">
                 <span className="flex items-center space-x-2 text-xs font-bold uppercase tracking-wider text-purple-300">
                   <Award className="w-4 h-4 text-yellow-400" />
-                  <span>Vibe2Ship Hackathon Evaluation</span>
+                  <span>SamayPe.AI Enterprise Pro Portal</span>
                 </span>
                 <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-purple-500/20 text-purple-300 border border-purple-500/30">INSTANT ACCESS</span>
               </div>
 
               <p className="text-xs text-gray-400 leading-relaxed">
-                Log in as an official evaluation judge to unlock unrestricted access to the real-time AI reasoning pipeline, live autonomous schedule compression, and test injectors.
+                Log in as an official SamayPe.AI user to unlock unrestricted access to the real-time AI reasoning pipeline, live autonomous schedule compression, and productivity intelligence.
               </p>
 
               <div className="text-xs font-mono bg-black/60 p-3.5 rounded-xl border border-white/10 space-y-1.5">
-                <div className="flex justify-between"><span className="text-gray-500">Judge ID:</span> <span className="text-white font-semibold">judge@vibe2ship.ai</span></div>
-                <div className="flex justify-between"><span className="text-gray-500">Password:</span> <span className="text-white font-semibold">vibe2ship2026</span></div>
-                <div className="flex justify-between"><span className="text-gray-500">Privileges:</span> <span className="text-cyan-400 font-semibold">Master AI Evaluator</span></div>
+                <div className="flex justify-between"><span className="text-gray-500">User ID:</span> <span className="text-white font-semibold">pro@samaype.ai</span></div>
+                <div className="flex justify-between"><span className="text-gray-500">Workspace:</span> <span className="text-white font-semibold">SamayPe.AI Pro</span></div>
+                <div className="flex justify-between"><span className="text-gray-500">Privileges:</span> <span className="text-cyan-400 font-semibold">Master AI Guardian</span></div>
               </div>
             </div>
           </div>
@@ -110,7 +110,7 @@ export default function LoginPage() {
               className="w-full flex items-center justify-center space-x-2 bg-gradient-to-r from-purple-600 via-blue-600 to-cyan-500 hover:opacity-95 text-white font-bold py-3 px-5 rounded-xl shadow-lg shadow-purple-600/25 transition-all cursor-pointer disabled:opacity-50 group"
             >
               <Sparkles className="w-4 h-4 text-yellow-300" />
-              <span className="text-sm">One-Click Judge Demo Login</span>
+              <span className="text-sm">One-Click SamayPe.AI Pro Access</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </button>
           </div>

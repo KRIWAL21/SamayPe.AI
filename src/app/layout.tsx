@@ -6,7 +6,7 @@ import './globals.css';
 
 export const metadata: Metadata = {
   title: 'SamayPe AI — Your Autonomous Deadline Guardian',
-  description: 'AI-powered proactive productivity companion built for the Vibe2Ship Hackathon.',
+  description: 'AI-powered proactive execution and cognitive deadline guardian built by SamayPe.AI.',
 };
 
 export default function RootLayout({
