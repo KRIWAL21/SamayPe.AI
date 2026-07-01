@@ -11,7 +11,7 @@ export async function connectDB() {
     return cached.conn;
   }
 
-  const uri = process.env.MONGODB_URI || 'mongodb+srv://rakesh:IHMUNHqx3mGNqPXX@cluster0.mnmfdg6.mongodb.net/chanakya-db?retryWrites=true&w=majority&appName=Cluster0';
+  const uri = process.env.MONGODB_URI || 'mongodb+srv://rakesh:IHMUNHqx3mGNqPXX@cluster0.mnmfdg6.mongodb.net/samaype?retryWrites=true&w=majority&appName=Cluster0';
 
   if (!cached.promise) {
     const opts = {

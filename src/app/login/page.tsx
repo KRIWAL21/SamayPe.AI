@@ -42,7 +42,7 @@ export default function LoginPage() {
         }));
         window.dispatchEvent(new Event('storage'));
       }
-      toast.success('Connected to MongoDB! Full Telemetry & AI Suite Loaded.', { id: toastId });
+      toast.success('Signed in successfully!', { id: toastId });
       router.push('/');
     } catch (err) {
       toast.error('Login failed. Please try again.', { id: toastId });
@@ -64,7 +64,7 @@ export default function LoginPage() {
 
     setLoading(true);
     const endpoint = isSignUp ? '/api/auth/signup' : '/api/auth/login';
-    const toastId = toast.loading(isSignUp ? 'Creating hashed credentials in MongoDB Cloud...' : 'Authenticating credentials against MongoDB Cloud...');
+    const toastId = toast.loading(isSignUp ? 'Creating account...' : 'Signing in...');
 
     try {
       const res = await fetch(endpoint, {
@@ -96,7 +96,7 @@ export default function LoginPage() {
         window.dispatchEvent(new Event('storage'));
       }
 
-      toast.success(isSignUp ? 'Account created & synced to MongoDB Cloud!' : `Welcome back, ${data.user?.name || email}!`, { id: toastId });
+      toast.success(isSignUp ? 'Account created successfully!' : 'Welcome back!', { id: toastId });
       router.push(isSignUp ? '/profile-setup' : '/');
     } catch (err: any) {
       toast.error(err.message || 'Authentication failed. Please try again.', { id: toastId });
@@ -168,10 +168,10 @@ export default function LoginPage() {
         <div className="md:col-span-5 p-6 sm:p-8 flex flex-col justify-center relative z-10 bg-black/30">
           <div className="mb-5">
             <h2 className="text-sm font-bold uppercase tracking-wider text-gray-300">
-              {isSignUp ? 'Create New Account' : 'Standard Sign In'}
+              {isSignUp ? 'Create an Account' : 'Welcome Back'}
             </h2>
             <p className="text-xs text-gray-500 mt-0.5">
-              {isSignUp ? 'Save your hashed credentials to MongoDB Cloud' : 'Enter your creator workspace credentials'}
+              {isSignUp ? 'Enter your details to create your workspace' : 'Enter your credentials to sign in'}
             </p>
           </div>
 
@@ -225,7 +225,7 @@ export default function LoginPage() {
               disabled={loading}
               className="w-full flex items-center justify-center space-x-2 bg-white/10 hover:bg-white/15 text-white font-semibold py-2.5 px-4 rounded-xl transition-all cursor-pointer disabled:opacity-50 border border-white/10 text-xs mt-2"
             >
-              <span>{isSignUp ? 'Sign Up & Save to DB' : 'Sign In to Dashboard'}</span>
+              <span>{isSignUp ? 'Create Account' : 'Sign In'}</span>
             </button>
           </form>
 
@@ -241,7 +241,7 @@ export default function LoginPage() {
 
           <div className="mt-5 pt-4 border-t border-white/5 flex items-center justify-center space-x-1.5 text-[10px] text-gray-500">
             <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-            <span>Protected by SHA-256 Hashing & MongoDB Cloud</span>
+            <span>Protected by end-to-end enterprise encryption</span>
           </div>
         </div>
       </motion.div>
