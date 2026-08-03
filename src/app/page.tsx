@@ -34,19 +34,13 @@ export default function DashboardPage() {
   const [thinkingTitle, setThinkingTitle] = useState('Autonomous Cognitive Decomposition');
   const [pendingAction, setPendingAction] = useState<(() => void) | null>(null);
 
+  // fetchTasks is kept as a one-shot fetch for manual refreshes after mutations.
+  // Real-time updates are handled by the SSE EventSource below.
   const fetchTasks = async () => {
     try {
-      let userId = 'demo-user';
-      if (typeof window !== 'undefined') {
-        const uStr = localStorage.getItem('samaype_auth_user');
-        if (uStr) {
-          try {
-            const u = JSON.parse(uStr);
-            if (u?.id) userId = u.id;
-          } catch (e) {}
-        }
-      }
-      const res = await fetch(`/api/tasks?userId=${encodeURIComponent(userId)}`);
+      // No userId param — the JWT cookie is sent automatically by the browser
+      const res = await fetch('/api/tasks');
+      if (res.status === 401) { router.push('/login'); return; }
       const data = await res.json();
       if (data.success && data.tasks) {
         setTasks(data.tasks);
@@ -70,14 +64,34 @@ export default function DashboardPage() {
     };
 
     checkUser();
-    fetchTasks();
-    const interval = setInterval(fetchTasks, 5000);
+
+    // ── Server-Sent Events (SSE) — replaces setInterval polling ──────────────
+    // Single persistent connection. Browser auto-sends the JWT cookie.
+    // Falls back to polling if SSE is not supported.
+    let es: EventSource | null = null;
+    if (typeof EventSource !== 'undefined') {
+      es = new EventSource('/api/tasks/stream');
+      es.onmessage = (event) => {
+        try {
+          const tasks = JSON.parse(event.data);
+          setTasks(tasks);
+        } catch {}
+      };
+      es.onerror = () => {
+        // On error (e.g. auth failure), fall back to a one-time fetch
+        es?.close();
+        fetchTasks();
+      };
+    } else {
+      fetchTasks();
+    }
+
     const handleUpdate = () => fetchTasks();
     const handleStorage = () => checkUser();
     window.addEventListener('tasksUpdated', handleUpdate);
     window.addEventListener('storage', handleStorage);
     return () => {
-      clearInterval(interval);
+      es?.close();
       window.removeEventListener('tasksUpdated', handleUpdate);
       window.removeEventListener('storage', handleStorage);
     };
@@ -147,20 +161,11 @@ export default function DashboardPage() {
     setThinkingOpen(true);
     setPendingAction(() => async () => {
       try {
-        let currentUserId = 'demo-user';
-        if (typeof window !== 'undefined') {
-          const authStr = localStorage.getItem('samaype_auth_user');
-          if (authStr) {
-            try {
-              const u = JSON.parse(authStr);
-              if (u?.id) currentUserId = u.id;
-            } catch (e) {}
-          }
-        }
         const res = await fetch('/api/decompose', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ userInput: transcript, userId: currentUserId })
+          // No userId in body — JWT cookie is sent automatically
+          body: JSON.stringify({ userInput: transcript })
         });
         const data = await res.json();
         if (data.success && data.task) {

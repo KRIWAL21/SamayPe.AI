@@ -1,6 +1,7 @@
 import { connectDB } from './db';
 import { TaskModel } from './models/Task';
 import { Task, Priority, RiskLevel } from './types';
+import { logger } from './logger';
 
 const defaultTasks: Task[] = [
   {
@@ -181,7 +182,7 @@ export async function getTasks(userId?: string): Promise<Task[]> {
       __v: undefined
     }));
   } catch (err) {
-    console.error('MongoDB getTasks error:', err);
+    logger.error('MongoDB getTasks error', { error: err instanceof Error ? err.message : String(err) });
     return defaultTasks;
   }
 }
@@ -193,7 +194,7 @@ export async function saveTasks(tasks: Task[]): Promise<void> {
       await TaskModel.findOneAndUpdate({ id: task.id }, task, { upsert: true, new: true });
     }
   } catch (err) {
-    console.error('MongoDB saveTasks error:', err);
+    logger.error('MongoDB saveTasks error', { error: err instanceof Error ? err.message : String(err) });
   }
 }
 
@@ -202,7 +203,7 @@ export async function addTask(task: Task): Promise<Task> {
   try {
     await TaskModel.create(task);
   } catch (err) {
-    console.error('MongoDB addTask error:', err);
+    logger.error('MongoDB addTask error', { error: err instanceof Error ? err.message : String(err) });
   }
   return task;
 }
@@ -212,7 +213,7 @@ export async function updateTask(updated: Task): Promise<Task> {
   try {
     await TaskModel.findOneAndUpdate({ id: updated.id }, updated, { new: true });
   } catch (err) {
-    console.error('MongoDB updateTask error:', err);
+    logger.error('MongoDB updateTask error', { error: err instanceof Error ? err.message : String(err) });
   }
   return updated;
 }
@@ -222,6 +223,6 @@ export async function deleteTask(id: string): Promise<void> {
   try {
     await TaskModel.deleteOne({ id });
   } catch (err) {
-    console.error('MongoDB deleteTask error:', err);
+    logger.error('MongoDB deleteTask error', { error: err instanceof Error ? err.message : String(err) });
   }
 }

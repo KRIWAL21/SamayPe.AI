@@ -2,8 +2,12 @@ import { NextResponse } from 'next/server';
 import { getTasks, updateTask } from '@/lib/storage';
 import { rescheduleTaskWithAI } from '@/lib/gemini';
 import { calculateRisk } from '@/lib/riskEngine';
+import { logger, generateRequestId } from '@/lib/logger';
 
 export async function POST(req: Request) {
+  const requestId = generateRequestId();
+  const userId = req.headers.get('x-user-id') ?? 'demo-user';
+
   try {
     const { taskId } = await req.json();
 
@@ -11,7 +15,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Task ID required' }, { status: 400 });
     }
 
-    const tasks = await getTasks();
+    const tasks = await getTasks(userId);
     const task = tasks.find(t => t.id === taskId);
     if (!task) {
       return NextResponse.json({ error: 'Task not found' }, { status: 404 });
@@ -34,9 +38,11 @@ export async function POST(req: Request) {
 
     await updateTask(updatedTask);
 
+    logger.info('Task rescheduled', { requestId, userId, taskId, route: '/api/reschedule' });
     return NextResponse.json({ success: true, task: updatedTask });
-  } catch (error: any) {
-    console.error('Reschedule error:', error);
+  } catch (error: unknown) {
+    const msg = error instanceof Error ? error.message : 'Unknown error';
+    logger.error('Reschedule error', { requestId, userId, error: msg, route: '/api/reschedule' });
     return NextResponse.json({ error: 'Failed to reschedule task' }, { status: 500 });
   }
 }

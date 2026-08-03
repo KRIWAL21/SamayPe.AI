@@ -26,6 +26,15 @@ export interface SubTask {
   completed: boolean;
   scheduledStart?: string; // ISO string
   scheduledEnd?: string;   // ISO string
+  /** IDs of other subtasks this one depends on — used for dependency graph algorithms */
+  dependsOn?: string[];
+  // CPM annotation fields — computed at runtime, never stored in the DB
+  earliestStart?: number;
+  earliestFinish?: number;
+  latestStart?: number;
+  latestFinish?: number;
+  slack?: number;
+  isCriticalPath?: boolean;
 }
 
 export interface Task {
