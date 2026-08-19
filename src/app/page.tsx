@@ -55,15 +55,18 @@ export default function DashboardPage() {
       const user = localStorage.getItem('samaype_auth_user');
       if (!user) {
         router.push('/login');
-        return;
+        return false;
       }
       try {
         const parsed = JSON.parse(user);
         setUserName(parsed.name || parsed.email?.split('@')[0] || 'Creator');
-      } catch (e) {}
+        return true;
+      } catch (e) {
+        return false;
+      }
     };
 
-    checkUser();
+    if (!checkUser()) return;
 
     // ── Server-Sent Events (SSE) — replaces setInterval polling ──────────────
     // Single persistent connection. Browser auto-sends the JWT cookie.

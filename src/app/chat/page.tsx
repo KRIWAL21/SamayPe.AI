@@ -41,12 +41,11 @@ export default function ChatPage() {
     let userId = 'demo-user';
     if (typeof window !== 'undefined') {
       const uStr = localStorage.getItem('samaype_auth_user');
-      if (uStr) {
-        try {
-          const u = JSON.parse(uStr);
-          if (u?.id) userId = u.id;
-        } catch (e) {}
-      }
+      if (!uStr) return; // Prevent 401 when redirecting
+      try {
+        const u = JSON.parse(uStr);
+        if (u?.id) userId = u.id;
+      } catch (e) {}
     }
     fetch(`/api/tasks?userId=${encodeURIComponent(userId)}`)
       .then(res => res.json())
