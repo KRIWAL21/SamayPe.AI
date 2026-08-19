@@ -9,7 +9,10 @@ import { Task } from '@/lib/types';
 export default function InsightsPage() {
   const [tasks, setTasks] = useState<Task[]>([]);
 
+  const [mounted, setMounted] = useState(false);
+
   useEffect(() => {
+    setMounted(true);
     const fetchTasks = async () => {
       try {
         let userId = 'demo-user';
@@ -31,6 +34,8 @@ export default function InsightsPage() {
     };
     fetchTasks();
   }, []);
+
+  if (!mounted) return null;
 
   // Compute real stats
   const completedTasks = tasks.filter(t => t.status === 'COMPLETED');
