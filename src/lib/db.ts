@@ -24,6 +24,9 @@ export async function connectDB() {
     cached.promise = mongoose.connect(uri, opts).then((mongoose) => {
       console.log('✅ Connected to MongoDB Cloud (samaype database)');
       return mongoose;
+    }).catch((err) => {
+      console.error('❌ MongoDB connection error:', err.message);
+      throw err;
     });
   }
 
