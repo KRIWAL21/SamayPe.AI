@@ -1,4 +1,5 @@
 import { Task, RiskLevel } from './types';
+import { getCriticalPathDuration } from './dependencyGraph';
 
 export interface RiskAssessment {
   score: number;       // 0.0 to 1.0+
@@ -8,7 +9,11 @@ export interface RiskAssessment {
 }
 
 /**
- * Calculate deadline risk based on work remaining vs time remaining
+ * Calculate deadline risk based on work remaining vs time remaining.
+ *
+ * When subtasks have dependency edges (dependsOn), uses the Critical Path Method
+ * duration — which accounts for parallelism and gives a more accurate risk signal
+ * than summing all subtask hours serially.
  */
 export function calculateRisk(task: Task): RiskAssessment {
   if (task.status === 'COMPLETED') {
@@ -24,11 +29,11 @@ export function calculateRisk(task: Task): RiskAssessment {
   const deadlineMs = new Date(task.deadline).getTime();
   const timeRemainingHours = Math.max(0.1, (deadlineMs - now) / (1000 * 60 * 60));
 
-  // Total uncompleted subtask minutes converted to hours
-  const uncompletedSubtasks = task.subtasks || [];
-  const workRemainingHours = uncompletedSubtasks
-    .filter(st => !st.completed)
-    .reduce((acc, st) => acc + (st.estimatedMinutes / 60), 0);
+  // Use Critical Path duration when dependency graph is available;
+  // fall back to serial sum when no dependencies are defined (backward compat).
+  const uncompletedSubtasks = (task.subtasks || []).filter(st => !st.completed);
+  const criticalPathMinutes = getCriticalPathDuration(uncompletedSubtasks);
+  const workRemainingHours = criticalPathMinutes / 60;
 
   // If there are no subtasks, estimate based on priority
   const effectiveWorkHours = workRemainingHours > 0 ? workRemainingHours : 2.0;
