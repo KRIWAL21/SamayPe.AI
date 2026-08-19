@@ -34,8 +34,10 @@ export default function ChatPage() {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [tasks, setTasks] = useState<any[]>([]);
+  const [mounted, setMounted] = useState(false);
 
   React.useEffect(() => {
+    setMounted(true);
     let userId = 'demo-user';
     if (typeof window !== 'undefined') {
       const uStr = localStorage.getItem('samaype_auth_user');
@@ -174,7 +176,7 @@ export default function ChatPage() {
                 }`}>
                   {msg.content}
                   <div className={`text-[10px] mt-2 text-right ${isUser ? 'text-purple-200' : 'text-gray-500'}`}>
-                    {msg.timestamp}
+                    {mounted ? msg.timestamp : ''}
                   </div>
                 </div>
               </motion.div>

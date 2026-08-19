@@ -48,7 +48,10 @@ export default function CalendarPage() {
     }
   };
 
+  const [mounted, setMounted] = useState(false);
+
   useEffect(() => {
+    setMounted(true);
     fetchTasks();
     window.addEventListener('tasksUpdated', fetchTasks);
     return () => window.removeEventListener('tasksUpdated', fetchTasks);
@@ -142,6 +145,8 @@ export default function CalendarPage() {
       setIsSubmitting(false);
     }
   };
+
+  if (!mounted) return null;
 
   // Generate 14 upcoming days
   const upcomingDays = Array.from({ length: 14 }).map((_, idx) => {
